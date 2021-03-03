@@ -1,13 +1,7 @@
---[[
-                             
-|\   |     /  \     |\   |  /-----\
-| \  |    /    \    | \  | |       |
-|  \ |   /______\   |  \ | |       |
-|   \|  /        \  |   \|  \-----/
+-- Gui to Lua
+-- Version: 3.2
 
-All credits to 8A5T0K#6221
-
-]]--
+-- Instances:
 repeat wait() until game:IsLoaded()
 
 local NanoHub = Instance.new("ScreenGui")
@@ -82,14 +76,18 @@ local LOADSTRING_Function = function()
 	local gameName = GameName
 	local load = Load
 	_G.games = {
-		[286090429] = function() loadstring(game:HttpGet('https://pastebin.com/raw/PhFL7VDw',true))() end;
-		[301549746] = function() loadstring(game:HttpGet('https://pastebin.com/raw/b9XQGh8x',true))() end;
-		[5958644308] = function() loadstring(game:HttpGet('https://pastebin.com/raw/pKU4FCR4',true))() end;
-	}
-	_G.gameNames = {
-		[286090429] = 'Arsenal';
-		[301549746] = 'CB:RO';
-		[5958644308] = 'Royal Battlegrounds';
+		[286090429] = {
+			['name'] = 'Arsenal';
+			['func'] = function() loadstring(game:HttpGet('https://raw.githubusercontent.com/MrAntiMatteryAlt/No/Games/Arsenal.lua',true))() end;
+		};
+		[301549746] = {
+			['name'] = 'CB:RO';
+			['func'] = function() loadstring(game:HttpGet('https://pastebin.com/raw/b9XQGh8x',true))() end;
+		};
+		[5958644308] = {
+			['name'] = 'RO:BA';
+			['func'] = function() loadstring(game:HttpGet('https://pastebin.com/raw/pKU4FCR4',true))() end;
+		};
 	}
 	
 	local dragify = function(Frame)
@@ -131,13 +129,18 @@ local LOADSTRING_Function = function()
 	
 	for i, v in next, _G.games do
 		if i == game.PlaceId then
-			for i, v2 in next, _G.gameNames do
-				gameName.Text = v2
-				Load.Text = 'Load'
-				load.MouseButton1Click:Connect(function()
-					v()
+			gameName.Text = v['name']
+			load.MouseButton1Click:Connect(function()
+				local succes,err = pcall(function()
+					v['func']()
+					NanoHub:Destroy()
 				end)
-			end
+				if succes and not err then
+					warn('Loading...')
+				else
+					warn('There was an error')
+				end
+			end)
 			break
 		else
 			gameName.Text = 'No NanoHub'
