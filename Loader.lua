@@ -1,8 +1,16 @@
--- Gui to Lua
--- Version: 3.2
-
--- Instances:
 repeat wait() until game:IsLoaded()
+
+local warnmsg = [==[
+							     
+|\    |      /\      |\    |  /-----\   |     |  |       |  |‾‾‾‾\
+| \   |     /  \     | \   | |       |  |     |  |       |  |____/
+|  \  |    /    \    |  \  | |       |  |-----|  |       |  |‾‾‾‾\
+|   \ |   /------\   |   \ | |       |  |     |  |       |  |     |
+|    \|  /        \  |    \|  \-----/   |     |   \_____/   |____/
+
+]==]
+
+warn(warnmsg)
 
 local NanoHub = Instance.new("ScreenGui")
 local Main = Instance.new("Frame")
@@ -10,9 +18,6 @@ local NameOfHub = Instance.new("TextLabel")
 local Load = Instance.new("TextButton")
 local GameName = Instance.new("TextLabel")
 local exploitLevel = 7
-
---Properties:
-
 NanoHub.Name = "NanoHub"
 NanoHub.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 if exploitLevel == 1 then
@@ -20,15 +25,12 @@ if exploitLevel == 1 then
 elseif exploitLevel >= 2 then
 	NanoHub.Parent = game.CoreGui
 end
-
-
 Main.Name = "Main"
 Main.Parent = NanoHub
 Main.BackgroundColor3 = Color3.fromRGB(54, 54, 54)
 Main.BorderSizePixel = 0
 Main.Position = UDim2.new(0.342635661, 0, 0.325552821, 0)
 Main.Size = UDim2.new(0, 0, 0, 271)
-
 NameOfHub.Name = "NameOfHub"
 NameOfHub.Parent = Main
 NameOfHub.BackgroundColor3 = Color3.fromRGB(38, 38, 38)
@@ -42,7 +44,6 @@ NameOfHub.TextSize = 14.000
 NameOfHub.TextWrapped = true
 NameOfHub.ZIndex = 0
 NameOfHub.Selectable = false
-
 Load.Name = "Load"
 Load.Parent = Main
 Load.BackgroundColor3 = Color3.fromRGB(32, 117, 60)
@@ -57,7 +58,6 @@ Load.TextSize = 14.000
 Load.TextWrapped = true
 Load.Visible = false
 Load.ZIndex = 2
-
 GameName.Name = "GameName"
 GameName.Parent = Main
 GameName.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
