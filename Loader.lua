@@ -1,15 +1,12 @@
 repeat wait() until game:IsLoaded()
 
 local warnmsg = [==[
-
                              
 |\    |      /\      |\    |  /-----\   |     |  |       |  |‾‾‾‾\
 | \   |     /  \     | \   | |       |  |     |  |       |  |____/
 |  \  |    /    \    |  \  | |       |  |-----|  |       |  |‾‾‾‾\
 |   \ |   /------\   |   \ | |       |  |     |  |       |  |     |
 |    \|  /        \  |    \|  \-----/   |     |   \_____/   |____/
-
-
 All credits to 8A5T0K#6221
 ]==]
 
@@ -26,7 +23,7 @@ local exploitLevel = 7
 
 NanoHub.Name = "NanoHub"
 NanoHub.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-if exploitLevel <= 1 then
+if exploitLevel == 1 then
 	NanoHub.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 elseif exploitLevel >= 2 then
 	NanoHub.Parent = game.CoreGui
@@ -86,6 +83,15 @@ local LOADSTRING_Function = function()
 	local ts = game:GetService("TweenService")
 	local gameName = GameName
 	local load = Load
+	
+	function checkDrawingAndMeta()
+		if Drawing and getrawmetatable then
+			return true
+		else
+			return false
+		end
+	end
+	
 	_G.games = {
 		[286090429] = {
 			['name'] = 'Arsenal';
@@ -138,44 +144,67 @@ local LOADSTRING_Function = function()
 	
 	dragify(Main)
 	
-	for i, v in next, _G.games do
-		if i == game.PlaceId then
-			gameName.Text = v['name']
-			load.MouseButton1Click:Connect(function()
-				local succes,err = pcall(function()
-					v['func']()
+	if checkDrawingAndMeta() == true then
+		for i, v in next, _G.games do
+			if i == game.PlaceId then
+				gameName.Text = v['name']
+				load.MouseButton1Click:Connect(function()
+					local succes,err = pcall(function()
+						v['func']()
+						NanoHub:Destroy()
+					end)
+					if succes and not err then
+						warn('Loading...')
+					else
+						warn('There was an error')
+					end
+				end)
+				break
+			else
+				gameName.Text = 'No NanoHub'
+				load.Text = 'Remove'
+				load.MouseButton1Click:Connect(function()
 					NanoHub:Destroy()
 				end)
-				if succes and not err then
-					warn('Loading...')
-				else
-					warn('There was an error')
-				end
-			end)
-			break
-		else
-			gameName.Text = 'No NanoHub'
-			load.Text = 'Remove'
-			load.MouseButton1Click:Connect(function()
-				NanoHub:Destroy()
-			end)
+			end
 		end
+		NameOfHub.Text = 'NanoHub'
+		local tweenInfo = TweenInfo.new(.75)
+		local tween = ts:Create(gameName,tweenInfo,{Size = UDim2.new(.5,0,.241,0)})
+		local tween1 = ts:Create(NameOfHub,tweenInfo,{Size = UDim2.new(1,0,0.185,0)})
+		tween1:Play()
+		tween1.Completed:Connect(function()
+			local newTweenInfo = TweenInfo.new(.8,Enum.EasingStyle.Bounce,Enum.EasingDirection.Out)
+			local tween2 = ts:Create(Main,tweenInfo,{Size = UDim2.new(0.344,0,0.334,0)})
+			local tween3 = ts:Create(load,newTweenInfo,{Position = UDim2.new(.248,0,.69,0)})
+			tween:Play()
+			tween2:Play()
+			wait(1.25)
+			load.Visible = true
+			tween3:Play()
+		end)
+	else
+		gameName.Text = 'To shitty exploit'
+		load.Text = 'Ok'
+		NameOfHub.Text = 'No'
+		local tweenInfo = TweenInfo.new(.75)
+		local tween = ts:Create(gameName,tweenInfo,{Size = UDim2.new(.5,0,.241,0)})
+		local tween1 = ts:Create(NameOfHub,tweenInfo,{Size = UDim2.new(1,0,0.185,0)})
+		tween1:Play()
+		tween1.Completed:Connect(function()
+			local newTweenInfo = TweenInfo.new(.8,Enum.EasingStyle.Bounce,Enum.EasingDirection.Out)
+			local tween2 = ts:Create(Main,tweenInfo,{Size = UDim2.new(0.344,0,0.334,0)})
+			local tween3 = ts:Create(load,newTweenInfo,{Position = UDim2.new(.248,0,.69,0)})
+			tween:Play()
+			tween2:Play()
+			wait(1.25)
+			load.Visible = true
+			tween3:Play()
+		end)
+		load.MouseButton1Click:Connect(function()
+			NanoHub:Destroy()
+		end)
 	end
-	NameOfHub.Text = 'NanoHub'
-	local tweenInfo = TweenInfo.new(.75)
-	local tween = ts:Create(gameName,tweenInfo,{Size = UDim2.new(.5,0,.241,0)})
-	local tween1 = ts:Create(NameOfHub,tweenInfo,{Size = UDim2.new(1,0,0.185,0)})
-	tween1:Play()
-	tween1.Completed:Connect(function()
-		local newTweenInfo = TweenInfo.new(.8,Enum.EasingStyle.Bounce,Enum.EasingDirection.Out)
-		local tween2 = ts:Create(Main,tweenInfo,{Size = UDim2.new(0.344,0,0.334,0)})
-		local tween3 = ts:Create(load,newTweenInfo,{Position = UDim2.new(.248,0,.69,0)})
-		tween:Play()
-		tween2:Play()
-		wait(1.25)
-		load.Visible = true
-		tween3:Play()
-	end)
 end
 
 coroutine.wrap(LOADSTRING_Function)()
