@@ -241,12 +241,12 @@ function boxBase:Update()
 	end
 
 	if ESP.Tracers then
-		local TorsoPos, Vis6 = WorldToViewportPoint(cam, locs.Torso.p)
+		local OnScreen, vector1 = cam:WorldToViewportPoint(locs.Torso.p)
 
-		if Vis6 then
+		if OnScreen then
 			self.Components.Tracer.Visible = true
 			self.Components.Tracer.From = Vector2.new(cam.ViewportSize.X/2,cam.ViewportSize.Y/2)
-			self.Components.Tracer.To = Vector2.new(cam.ViewportSize.X/2,cam.ViewportSize.Y/ESP.AttachShift)
+			self.Components.Tracer.To = Vector2.new(vector1.X,vector1.Y)
 			self.Components.Tracer.Color = color
 		else
 			self.Components.Tracer.Visible = false
