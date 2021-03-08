@@ -241,7 +241,7 @@ function boxBase:Update()
 	end
 
 	if ESP.Tracers then
-		local OnScreen, vector1 = cam:WorldToViewportPoint(locs.Torso.p)
+		local vector1, OnScreen = cam:WorldToViewportPoint(locs.Torso.p)
 
 		if OnScreen then
 			self.Components.Tracer.Visible = true
