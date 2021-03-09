@@ -20,6 +20,8 @@ local library = {
 }
 
 library.esp:Toggle(true)
+library.esp.Names = false
+library.esp.Boxes = false
 
 local binds = {};binds.Esp = 'Z';binds.Aimbot = 'X';binds.UpdateEsp = 'T';binds.Toggle = 'RightAlt';
 
