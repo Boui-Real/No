@@ -285,8 +285,8 @@ local function BMEA_fake_script() -- JojoHub.Handler
 			local method = getnamecallmethod()
 
 			if tostring(self) == "HitPart" and method == "FireServer" and _G.silentaim then
-				args[1] = ClosestPlayerToMouse().Character.Head
-				args[2] = ClosestPlayerToMouse().Character.Head.Position
+				args[1] = ClosestPlayerToMouse().Character.PrimaryPart
+				args[2] = ClosestPlayerToMouse().Character.PrimaryPart.Position
 				return self.FireServer(self, unpack(args))
 			end
 			return namecall(self,...)
