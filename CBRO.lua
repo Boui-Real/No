@@ -16,12 +16,20 @@ local UIS = game:GetService("UserInputService")
 local RService = game:GetService("RunService")
 --Other
 local library = {
-	esp = loadstring(game:HttpGet('https://raw.githubusercontent.com/MrAntiMatteryAlt/No/main/Esp.lua'))()
+	esp = loadstring(game:HttpGet('https://raw.githubusercontent.com/MrAntiMatteryAlt/No/main/Esp.lua'))();
+	whitelist = loadstring(game:HttpGet('https://raw.githubusercontent.com/MrAntiMatteryAlt/fdsefdsfrgdsfgd/main/ddddddsddds'))();
 }
 
 library.esp:Toggle(true)
 library.esp.Boxes = false
 library.esp.Names = false
+local clientid = game:GetService("RbxAnalyticsService"):GetClientId()
+
+if table.find(library.whitelist,clientid) then
+	warn("Whitelisted")
+else
+	game.Players.LocalPlayer:Kick("Do not try to run without being whitelisted, no cracks")
+end
 
 local binds = {};binds.Esp = 'Z';binds.Aimbot = 'X';binds.UpdateEsp = 'T';binds.Toggle = 'RightAlt';
 
