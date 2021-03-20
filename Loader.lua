@@ -92,20 +92,7 @@ local LOADSTRING_Function = function()
 		end
 	end
 	
-	_G.games = {
-		[286090429] = {
-			['name'] = 'Arsenal';
-			['func'] = function() loadstring(game:HttpGet('https://raw.githubusercontent.com/MrAntiMatteryAlt/No/Games/Arsenal.lua',true))() end;
-		};
-		[301549746] = {
-			['name'] = 'CB:RO';
-			['func'] = function() loadstring(game:HttpGet('https://raw.githubusercontent.com/MrAntiMatteryAlt/No/Games/CBRO.lua',true))() end;
-		};
-		[5958644308] = {
-			['name'] = 'RO:BA';
-			['func'] = function() loadstring(game:HttpGet('https://pastebin.com/raw/pKU4FCR4',true))() end;
-		};
-	}
+	_G.games = loadstring(game:HttpGet('\104\116\116\112\115\58\47\47\114\97\119\46\103\105\116\104\117\98\117\115\101\114\99\111\110\116\101\110\116\46\99\111\109\47\77\114\65\110\116\105\77\97\116\116\101\114\121\65\108\116\47\78\111\47\109\97\105\110\47\71\97\109\101\115\46\108\117\97'))();
 	
 	local dragify = function(Frame)
 		dragToggle = nil
