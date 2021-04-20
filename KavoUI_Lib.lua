@@ -359,7 +359,7 @@ function Kavo.CreateLib(kavName, themeList)
 
     local first = true
 
-    function Tabs:NewTab(tabName)
+    function Tabs:CreateTab(tabName)
         tabName = tabName or "Tab"
         local tabButton = Instance.new("TextButton")
         local UICorner = Instance.new("UICorner")
