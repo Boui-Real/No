@@ -7,10 +7,6 @@ local games = {
 			['name'] = 'CB:RO';
 			['func'] = function() loadstring(game:HttpGet('https://raw.githubusercontent.com/MrAntiMatteryAlt/No/Games/CBRO.lua',true))() end;
 		};
-		[5958644308] = {
-			['name'] = 'RO:BA';
-			['func'] = function() loadstring(game:HttpGet('https://pastebin.com/raw/pKU4FCR4',true))() end;
-		};
 		[1537690962] = {
 			['name'] = 'Bee Swarm Simulator';
 			['func'] = function() loadstring(game:HttpGet(('https://raw.githubusercontent.com/MrAntiMatteryAlt/No/Games/Bee%20Swarm%20Simulator.lua'),true))() end
