@@ -1954,7 +1954,7 @@ function Kavo.CreateLib(kavName, themeList)
                             if hold then
                                holding_ok = true
                                if holding_ok then 
-                                   callback()                
+                                   callback(holding_ok)
                                end
                            else
                                 callback()
