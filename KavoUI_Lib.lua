@@ -1883,10 +1883,11 @@ function Kavo.CreateLib(kavName, themeList)
                 end
                 return DropFunction
             end
-            function Elements:AddKeybind(keytext, keyinf, first, callback)
+            function Elements:AddKeybind(keytext, keyinf, first, callback,hold)
                 keytext = keytext or "KeybindText"
                 keyinf = keyinf or "KebindInfo"
                 callback = callback or function() end
+                local holding_ok = false
                 local oldKey = first.Name
                 local keybindElement = Instance.new("TextButton")
                 local UICorner = Instance.new("UICorner")
@@ -1950,10 +1951,27 @@ function Kavo.CreateLib(kavName, themeList)
                 game:GetService("UserInputService").InputBegan:connect(function(current, ok) 
                     if not ok then 
                         if current.KeyCode.Name == oldKey then 
-                            callback()
+                            if hold then
+                               holding_ok = true
+                               if holding_ok then 
+                                   callback()                
+                               end
+                           else
+                                callback()
+                            end
                         end
                     end
                 end)
+                                
+                game:GetService("UserInputService").InputEnded:connect(function(current, ok) 
+                    if not ok then
+                       if current.KeyCode.Name == oldKey then
+                          if hold then
+                              holding_ok = false                      
+                          end
+                       end
+                    end
+                end)                       
 
                 moreInfo.Name = "TipMore"
                 moreInfo.Parent = infoContainer
