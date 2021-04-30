@@ -1,4 +1,6 @@
-local Kavo = {}
+local Kavo = {
+        Pointers = {};
+}
 
 local tween = game:GetService("TweenService")
 local tweeninfo = TweenInfo.new
