@@ -5,15 +5,20 @@ local Player = game.Players.LocalPlayer
 local Window = library.CreateLib("Drawing Library", "Sentinel")
 
 local LineTab = Window:CreateTab("Line")
-local CircleTab = Window:CreateTab('Circle')
+local CircleTab = Window:CreateTab("Circle")
+local TextTab = Window:CreateTab("Text")
 local KeybindsTab = Window:CreateTab("Keybinds")
 
 local LineTabCaSettings = LineTab:AddLocalTab("Settings")
 local LineTabCaTracers = LineTab:AddLocalTab("Tracers")
 local LineTabCaBox = LineTab:AddLocalTab("Box")
 
-local CircleTabCaSettings = CircleTab:AddLocalTab('Settings')
-local CircleTabCaMouse = CircleTab:AddLocalTab('Mouse')
+local CircleTabCaSettings = CircleTab:AddLocalTab("Settings")
+local CircleTabCaMouse = CircleTab:AddLocalTab("Mouse")
+local CircleTabCaHead = CircleTab:AddLocalTab("Head")
+
+local TextTabCaSettings = TextTab:AddLocalTab("Settings")
+local TextTabCaHealth = TextTab:AddLocalTab("Health")
 
 local KeybindsTabCaKeybinds = KeybindsTab:AddLocalTab("Keybinds")
 
@@ -26,47 +31,277 @@ KeybindsTabCaKeybinds:AddKeybind(
     end
 )
 
-getgenv().circlecolor = Color3.new(1,0,0)
-getgenv().circleradius = 10
+getgenv().textbased = false
 
-CircleTabCaSettings:AddCP('Circle Color','',getgenv().circlecolor,function(v)
-    getgenv().circlecolor = v
-end)
+TextTabCaSettings:AddToggle(
+    "Team Based",
+    "",
+    function(v)
+        getgenv().textbased = v
+    end
+)
 
-local circles = {}
+TextTabCaHealth:AddToggle(
+    "Enabled",
+    "",
+    function(val)
+        getgenv().healthesp = val
+        local texts = {}
 
-CircleTabCaMouse:AddToggle('Show Mouse','',function(v)
-    getgenv().circlemouse = v
-    if getgenv().circlemouse then
-        local idk = nil
-        if circles['mouse'] ~= nil then
-            idk = circles['mouse']
-        else
-            idk = Drawing.new('Circle')
-            circles['mouse'] = idk
-        end
+        local Player = game.Players.LocalPlayer
 
-        local mouse = game.Players.LocalPlayer:GetMouse()
+        local camera = workspace.CurrentCamera
 
-        idk.Visible = true
-        mouse.Move:Connect(function()
-            idk.Position = game:service('UserInputService'):GetMouseLocation()
-        end)
+        game.Players.PlayerRemoving:Connect(
+            function(v)
+                if texts[v.Name] ~= nil then
+                    texts[v.Name]:Remove()
+                    texts[v.Name] = nil
+                end
+            end
+        )
+
         while wait() do
-            idk.Radius = getgenv().circleradius
-            idk.Color = getgenv().circlecolor
-        end
-    else
-        if circles['mouse'] ~= nil then
-            circles['mouse']:Remove()
-            circles['mouse'] = nil
+            for i, v in pairs(game.Players:GetPlayers()) do
+                if v.Character and getgenv().healthesp then
+                    if getgenv().textbased then
+                        if v.Team ~= Player.Team then
+                            pcall(
+                                function()
+                                    local text = nil
+                                    if texts[v.Name] ~= nil then
+                                        text = texts[v.Name]
+                                    else
+                                        text = Drawing.new("Text")
+                                        texts[v.Name] = text
+                                    end
+
+                                    local vector, onScreen =
+                                        camera:WorldToViewportPoint(v.Character.HumanoidRootPart.Position)
+
+                                    local Scale = v.Character.Head.Size.Y / 2
+                                    local Size = Vector3.new(2, 5, 0) * (Scale * 2)
+                                    local TL =
+                                        camera:WorldToViewportPoint(
+                                        (v.Character.HumanoidRootPart.CFrame * CFrame.new(Size.X, Size.Y, 0)).p
+                                    )
+
+                                    if onScreen then
+                                        local maxHealth = v.Character.Humanoid.MaxHealth
+                                        local health = v.Character.Humanoid.Health
+                                        text.Visible = true
+                                        text.Outline = true
+                                        text.OutlineColor = Color3.new(0, 0, 0)
+                                        text.Position = Vector2.new(TL.X, TL.Y)
+                                        text.Size = ((vector.X + vector.Y) / ((vector.X / 12) + (vector.Y / 12)))
+                                        text.Color =
+                                            Color3.fromRGB(
+                                            255 - 255 / (maxHealth / health),
+                                            255 / (maxHealth / health),
+                                            0
+                                        )
+                                        text.Text = math.floor(health)
+                                    else
+                                        text.Visible = false
+                                    end
+                                end
+                            )
+                        end
+                    else
+                        if v ~= Player then
+                            pcall(
+                                function()
+                                    local text = nil
+                                    if texts[v.Name] ~= nil then
+                                        text = texts[v.Name]
+                                    else
+                                        text = Drawing.new("Text")
+                                        texts[v.Name] = text
+                                    end
+
+                                    local vector, onScreen =
+                                        camera:WorldToViewportPoint(v.Character.HumanoidRootPart.Position)
+
+                                    local Scale = v.Character.Head.Size.Y / 2
+                                    local Size = Vector3.new(3, 7, 0) * (Scale * 2)
+                                    local TL =
+                                        camera:WorldToViewportPoint(
+                                        (v.Character.HumanoidRootPart.CFrame * CFrame.new(Size.X, Size.Y, 0)).p
+                                    )
+
+                                    if onScreen then
+                                        local maxHealth = v.Character.Humanoid.MaxHealth
+                                        local health = v.Character.Humanoid.Health
+                                        text.Visible = true
+                                        text.Outline = true
+                                        text.OutlineColor = Color3.new(0, 0, 0)
+                                        text.Position = Vector2.new(TL.X, TL.Y)
+                                        text.Size = ((vector.X + vector.Y) / ((vector.X / 12) + (vector.Y / 12)))
+                                        text.Color =
+                                            Color3.fromRGB(
+                                            255 - 255 / (maxHealth / health),
+                                            255 / (maxHealth / health),
+                                            0
+                                        )
+                                        text.Text = math.floor(health)
+                                    else
+                                        text.Visible = false
+                                    end
+                                end
+                            )
+                        end
+                    end
+                elseif not getgenv().healthesp then
+                    for _, need in pairs(texts) do
+                        need:Remove()
+                        need = nil
+                    end
+                    table.clear(texts)
+                end
+            end
         end
     end
-end)
+)
 
-CircleTabCaMouse:AddSlider('Radius','',50,5,function(v)
-    getgenv().circleradius = v
-end)
+getgenv().circlecolor = Color3.new(1, 0, 0)
+getgenv().circleradius = 10
+
+CircleTabCaSettings:AddToggle(
+    "Team Based",
+    "",
+    function(v)
+        getgenv().circlebased = v
+    end
+)
+
+CircleTabCaSettings:AddCP(
+    "Circle Color",
+    "",
+    getgenv().circlecolor,
+    function(v)
+        getgenv().circlecolor = v
+    end
+)
+local circles = {}
+local circles2 = {}
+
+CircleTabCaMouse:AddToggle(
+    "Show Mouse",
+    "",
+    function(v)
+        getgenv().circlemouse = v
+        if getgenv().circlemouse then
+            local idk = nil
+            if circles2["mouse"] ~= nil then
+                idk = circles2["mouse"]
+            else
+                idk = Drawing.new("Circle")
+                circles2["mouse"] = idk
+            end
+
+            local mouse = game.Players.LocalPlayer:GetMouse()
+
+            idk.Visible = true
+            mouse.Move:Connect(
+                function()
+                    idk.Position = game:service("UserInputService"):GetMouseLocation()
+                end
+            )
+            while wait() do
+                idk.Radius = getgenv().circleradius
+                idk.Color = getgenv().circlecolor
+            end
+        else
+            if circles2["mouse"] ~= nil then
+                circles2["mouse"]:Remove()
+                circles2["mouse"] = nil
+            end
+        end
+    end
+)
+
+CircleTabCaHead:AddToggle(
+    "Enabled",
+    "",
+    function(val)
+        getgenv().circlehead = val
+
+        local Player = game.Players.LocalPlayer
+        local camera = workspace.CurrentCamera
+
+        while wait() do
+            for i, v in pairs(game.Players:GetPlayers()) do
+                if v.Character and getgenv().circlehead then
+                    if getgenv().circlebased then
+                        if v.Team ~= Player.Team then
+                            pcall(
+                                function()
+                                    local vector, onScreen = camera:WorldToViewportPoint(v.Character.Head.Position)
+                                    local circle = nil
+                                    if circles[v.Name] then
+                                        circle = circles[v.Name]
+                                    else
+                                        circle = Drawing.new("Circle")
+                                        circles[v.Name] = circle
+                                    end
+                                    if onScreen then
+                                        circle.Visible = true
+                                        circle.Radius = 10
+                                        circle.Position = Vector2.new(vector.X, vector.Y)
+                                        circle.Color = getgenv().circlecolor
+                                    else
+                                        circle.Visible = false
+                                    end
+                                end
+                            )
+                        end
+                    else
+                        if v ~= Player then
+                            local vector, onScreen = camera:WorldToViewportPoint(v.Character.Head.Position)
+                            local circle = nil
+                            if circles[v.Name] then
+                                circle = circles[v.Name]
+                            else
+                                circle = Drawing.new("Circle")
+                                circles[v.Name] = circle
+                            end
+                            if onScreen then
+                                circle.Visible = true
+                                circle.Radius = 10
+                                circle.Position = Vector2.new(vector.X, vector.Y)
+                                circle.Color = v.TeamColor.Color
+                            else
+                                circle.Visible = false
+                            end
+                        end
+                    end
+                elseif v.Character == nil then
+                    if circles[v.Name] ~= nil then
+                        circles[v.Name]:Remove()
+                        circles[v.Name] = nil
+                    end
+                elseif not getgenv().circlehead then
+                    for _, ok in pairs(circles) do
+                        if ok ~= nil then
+                            ok:Remove()
+                        end
+                    end
+                    table.clear(circles)
+                end
+            end
+        end
+    end
+)
+
+CircleTabCaMouse:AddSlider(
+    "Radius",
+    "",
+    50,
+    5,
+    function(v)
+        getgenv().circleradius = v
+    end
+)
 
 getgenv().linecolor = Color3.new(1, 0, 0)
 
@@ -127,7 +362,8 @@ LineTabCaTracers:AddToggle(
                                         if getgenv().linetracerfrommouse then
                                             draw.From = game:service("UserInputService"):GetMouseLocation()
                                         else
-                                            draw.From = Vector2.new(camera.ViewportSize.X / 2, camera.ViewportSize.Y / 2)
+                                            draw.From =
+                                                Vector2.new(camera.ViewportSize.X / 2, camera.ViewportSize.Y / 2)
                                         end
                                         draw.To = Vector2.new(vector.X, vector.Y)
                                         draw.Thickness = 2
@@ -160,7 +396,8 @@ LineTabCaTracers:AddToggle(
                                         if getgenv().linetracerfrommouse then
                                             draw.From = game:service("UserInputService"):GetMouseLocation()
                                         else
-                                            draw.From = Vector2.new(camera.ViewportSize.X / 2, camera.ViewportSize.Y / 2)
+                                            draw.From =
+                                                Vector2.new(camera.ViewportSize.X / 2, camera.ViewportSize.Y / 2)
                                         end
                                         draw.To = Vector2.new(vector.X, vector.Y)
                                         draw.Thickness = 2
@@ -173,8 +410,8 @@ LineTabCaTracers:AddToggle(
                             )
                         end
                     end
-                elseif v ~= Player and v.Character == nil then
-                    if drawings[v.Name] then
+                elseif v.Character == nil then
+                    if drawings[v.Name] ~= nil then
                         drawings[v.Name]:Remove()
                         drawings[v.Name] = nil
                     end
@@ -210,7 +447,7 @@ LineTabCaBox:AddToggle(
         game.Players.PlayerRemoving:Connect(
             function(plr)
                 if drawings[plr.Name] ~= nil then
-                    for i,v in pairs(drawings[plr.Name]) do
+                    for i, v in pairs(drawings[plr.Name]) do
                         v:Remove()
                         drawings[plr.Name] = nil
                     end
@@ -364,6 +601,13 @@ LineTabCaBox:AddToggle(
                         end
                     end
                     table.clear(drawings)
+                elseif v.Character == nil then
+                    if drawings[v.Name] ~= nil then
+                        for _, k in pairs(drawings[v.Name]) do
+                            k:Remove()
+                        end
+                        drawings[v.Name] = nil
+                    end
                 end
             end
         end
