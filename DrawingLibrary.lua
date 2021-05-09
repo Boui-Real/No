@@ -229,6 +229,13 @@ CircleTabCaHead:AddToggle(
         local Player = game.Players.LocalPlayer
         local camera = workspace.CurrentCamera
 
+        game.Players.PlayerRemoving:Connect(function(v)
+            if circles[v.Name] ~= nil then
+                circles[v.Name]:Remove()
+                circles[v.Name] = nil
+            end
+        end)
+
         while wait() do
             for i, v in pairs(game.Players:GetPlayers()) do
                 if v.Character and getgenv().circlehead then
