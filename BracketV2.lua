@@ -480,7 +480,7 @@ function Library:CreateWindow(title, color)
                     return Enabled
                 end
 
-                function ToggleTypes:CreateKeyBind(def, callback)
+                function ToggleTypes:CreateKeyBind(def , defaultName , callback)
                     def = def or "NONE"
 
                     -- Keybind Main
@@ -513,7 +513,7 @@ function Library:CreateWindow(title, color)
                     keymain.Font = Enum.Font.SourceSans
                     keymain.TextColor3 = Color3.fromRGB(0, 0, 0)
                     keymain.TextSize = 14.000
-                    keymain.Text = ""
+                    keymain.Text = tostring('defaultName')
 
                     -- Keybind Codes
                     local WaitingForBind = false
