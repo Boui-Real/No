@@ -1174,6 +1174,8 @@ function Library:CreateWindow(title, color)
                     SelectedColor = colorpicker.BackgroundColor3
                     callback(SelectedColor)
                 end
+                
+                ColorTypes:SetColor(def)
 
                 return ColorTypes
             end
