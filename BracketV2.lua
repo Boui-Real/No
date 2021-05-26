@@ -36,7 +36,6 @@ function Library:CreateWindow(title, color)
     local WinTypes = {}
     local WindowDragging, SliderDragging, ColorPickerDragging = false, false, false
     local oldcolor = nil
-    local keybind = "RightControl"
     local cancbind = false
 
     -- Window Instances
@@ -150,18 +149,6 @@ function Library:CreateWindow(title, color)
             local Delta = input.Position - dragStart
             local Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + Delta.X, startPos.Y.Scale, startPos.Y.Offset + Delta.Y)
             core.Position = Position
-        end
-    end)
-
-    userinputservice.InputBegan:Connect(function(input)
-        if (cancbind) then
-            if (input.KeyCode == Enum.KeyCode[keybind]) then
-                BracketV2.Enabled = not BracketV2.Enabled
-            end
-        else
-            if (input.KeyCode == Enum.KeyCode.RightControl) then
-                BracketV2.Enabled = not BracketV2.Enabled
-            end
         end
     end)
 
