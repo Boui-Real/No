@@ -28,6 +28,16 @@ function Library:GetSide(LeftSize, RightSize)
     end
 end
 
+function Library:LoadConfig(cfg)
+   table.foreach(cfg, function(a,b)
+		if library.pointers[a] then
+			spawn(function() Library.Pointers[a]:Set(b) end)
+		else
+			warn("Config loading error (Object not found):", a, b)
+		end
+	end) 
+end
+
 function Library:CreateWindow(title, color)
     title = title or "Bracket Lib V2"
     color = color and Library:GetColor(color) or Color3.fromRGB(19, 119, 255)
