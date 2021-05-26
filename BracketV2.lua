@@ -879,6 +879,60 @@ function Library:CreateWindow(title, color)
                 function DropTypes:GetOption()
                     return Selected
                 end
+				
+		function DropTypes:Refresh(newoptions)
+		    options = newoptions
+		    list:ClearAllChildren()
+		    if #options ~= 0 then
+		       for i,v in pairs(options) do
+                        local item = Instance.new("TextButton")
+                        local UIGradient_5 = Instance.new("UIGradient")
+                        local title_5 = Instance.new("TextLabel")
+                        
+                        item.Name = "item"
+                        item.Parent = list
+                        item.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+                        item.BorderSizePixel = 0
+                        item.Size = UDim2.new(1, 0, 0, 19)
+                        item.Font = Enum.Font.SourceSans
+                        item.Text = ""
+                        item.TextColor3 = Color3.fromRGB(0, 0, 0)
+                        item.TextSize = 14.000
+                        
+                        UIGradient_5.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 255, 255)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(167, 167, 167))}
+                        UIGradient_5.Rotation = 90
+                        UIGradient_5.Parent = item
+                        UIGradient_5.Enabled = false
+
+                        title_5.Name = "title"
+                        title_5.Parent = item
+                        title_5.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                        title_5.BackgroundTransparency = 1.000
+                        title_5.Size = UDim2.new(1, 0, 1, 0)
+                        title_5.Font = Enum.Font.SourceSans
+                        title_5.Text = v
+                        title_5.TextColor3 = Color3.fromRGB(255, 255, 255)
+                        title_5.TextSize = 14.000
+                        title_5.TextStrokeTransparency = 0.000
+
+                        item.MouseButton1Click:Connect(function()
+                            UIGradient_5.Enabled = true
+                            item.BackgroundColor3 = color
+
+                            for i,v in pairs(list:GetChildren()) do
+                                if (v.Name:find("item") and v ~= item) then
+                                    v.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+                                    v.UIGradient.Enabled = false
+                                end
+                            end
+
+                            Selected = v
+                            title_4.Text = Selected
+                            callback(Selected)
+                        end)
+                    end			
+		    end
+		end
                 
                 Library.Pointers[name] = DropTypes
 
