@@ -1,5 +1,5 @@
 -- ui lib
-local Library = {}
+local Library = {Pointers = {};}
 
 function Library:GetColor(color, table)
     table = table or false
@@ -450,7 +450,7 @@ function Library:CreateWindow(title, color)
                 end)
 
                 -- Toggle Types
-                function ToggleTypes:SetState(state)
+                function ToggleTypes:Set(state)
                     state = state or false
                     Enabled = state
 
@@ -568,7 +568,9 @@ function Library:CreateWindow(title, color)
 
                     return keytypes
                 end
-
+                
+                Library.Pointers[name] = ToggleTypes
+                
                 return ToggleTypes
             end
 
@@ -676,7 +678,7 @@ function Library:CreateWindow(title, color)
                 end)
 
                 -- Slider Types
-                function SliderTypes:SetValue(s)
+                function SliderTypes:Set(s)
                     s = s or 0
                     Value = s
                     bar.Size = UDim2.new(Value / max, 0, 1, 0)
@@ -687,6 +689,8 @@ function Library:CreateWindow(title, color)
                 function SliderTypes:GetValue()
                     return Value
                 end
+                
+                Library.Pointers[name] = SliderTypes
 
                 return SliderTypes
             end
@@ -842,7 +846,7 @@ function Library:CreateWindow(title, color)
                 end
 
                 -- Dropdown Types
-                function DropTypes:SetOption(option)
+                function DropTypes:Set(option)
                     option = option or options[1]
                     Selected = tostring(option)
                     
@@ -865,6 +869,8 @@ function Library:CreateWindow(title, color)
                 function DropTypes:GetOption()
                     return Selected
                 end
+                
+                Library.Pointers[name] = DropTypes
 
                 return DropTypes
             end
@@ -1154,7 +1160,7 @@ function Library:CreateWindow(title, color)
                 end)
 
                 -- ColorPicker Types
-                function ColorTypes:SetColor(color)
+                function ColorTypes:Set(color)
                     color = color or Color3.fromRGB(255, 255, 255)
                     colorpicker.BackgroundColor3 = color
                     gradient.BackgroundColor3 = color
@@ -1162,7 +1168,9 @@ function Library:CreateWindow(title, color)
                     callback(SelectedColor)
                 end
                 
-                ColorTypes:SetColor(def)
+                ColorTypes:Set(def)
+                
+                Library.Pointers[name] = ColorTypes
 
                 return ColorTypes
             end
