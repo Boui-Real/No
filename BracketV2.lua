@@ -391,7 +391,7 @@ function Library:CreateWindow(title, color)
             -- Groupbox Types
             function GroupTypes:CreateToggle(name, callback)
                 name = name or "New Toggle"
-                callback = callback or function(v) print(v) end
+                callback = callback or function() end
 
                 -- Toggle Main
                 local ToggleTypes = {}
