@@ -516,7 +516,7 @@ function Library:CreateWindow(title, color)
                     local WaitingForBind = false
                     local Clicked = false
                     local Sel = def
-                    local Blacklisted = { "W", "A", "S", "D", "Slash", "Tab", "Backspace", "Escape", "Space", "Delete", "Unknown" }
+                    local Blacklisted = { "Slash", "Tab", "Backspace", "Escape", "Space", "Delete", "Unknown" }
 
                     keymain.MouseButton1Click:Connect(function()
                         Clicked = true
