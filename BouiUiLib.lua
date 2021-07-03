@@ -2786,7 +2786,7 @@ function library:CreateWindow(name)
 						dragging = false
 
 
-						CPDragging = true
+						CPDragging = false
 
 
 					end
