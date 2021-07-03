@@ -577,8 +577,13 @@ function library:CreateWindow(name)
 
 		Grid_Handler.CellSize = UDim2.new(1 / (#Tabs:GetChildren() - 1),0,0.5,0)
 
-
-		
+		for i,v in pairs(CurrentTab:GetChildren()) do
+			if v ~= CurrentTab:GetChildren()[1] then
+				v.Visible = false
+			else
+				v.Visible = true
+			end
+		end
 
 
 		local TabLib = {}
@@ -2432,6 +2437,8 @@ function library:CreateWindow(name)
 
 
 				ColorPicker.TextWrapped = true
+				
+				ColorPicker.ZIndex = 10
 
 
 
