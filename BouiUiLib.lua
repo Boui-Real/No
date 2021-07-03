@@ -1357,11 +1357,8 @@ function library:CreateWindow(name)
 
 				Dropdown.TextWrapped = true
 
-
-				Dropdown.ZIndex = 5
-
-
-
+				
+				
 				Toggle_2.Name = "Toggle"
 
 
@@ -1529,7 +1526,13 @@ function library:CreateWindow(name)
 					dropdown.opened = not dropdown.opened
 
 
-					Btn.Text = library.Symbols.Dropdown.Dropped
+					if dropdown.opened == true then
+						Btn.Text = library.Symbols.Dropdown.Dropped
+						Dropdown.ZIndex = 5
+					else
+						Btn.Text = library.Symbols.Dropdown.Drop
+						Dropdown.ZIndex = 1
+					end
 
 
 
