@@ -84,7 +84,7 @@ function library:CreateWindow(name)
 	UILib.Name = "UILib"
 
 
-	UILib.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+	UILib.Parent = game.CoreGui
 
 
 	UILib.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
@@ -2271,7 +2271,19 @@ function library:CreateWindow(name)
 				_Box.TextWrapped = true
 
 
-				
+				if #Section:GetChildren() == 2 then
+
+
+					Section.Size = UDim2.new(0.949999988, 0, 0, 25)
+
+
+				elseif #Section:GetChildren() > 2 then
+
+
+					Section.Size = UDim2.new(0.949999988, 0, 0, ((#Section:GetChildren() - 1) * 25) + ((#Section:GetChildren() - 1) * 7))
+
+
+				end
 
 
 				_Box.FocusLost:Connect(function(prop)
@@ -2560,7 +2572,19 @@ function library:CreateWindow(name)
 				UIGradient.Parent = ColorSlider
 
 
-				
+				if #Section:GetChildren() == 2 then
+
+
+					Section.Size = UDim2.new(0.949999988, 0, 0, 25)
+
+
+				elseif #Section:GetChildren() > 2 then
+
+
+					Section.Size = UDim2.new(0.949999988, 0, 0, ((#Section:GetChildren() - 1) * 25) + ((#Section:GetChildren() - 1) * 7))
+
+
+				end
 
 
 				ColorPicker.MouseButton1Click:Connect(function()
@@ -2790,8 +2814,27 @@ function library:CreateWindow(name)
 
 
 					end
+						
+					local ColorLib = {}
+					
+					function ColorLib:Set(val)
+						Color.BackgroundColor3 = val
 
 
+						Gradient.BackgroundColor3 = val
+
+
+						picker.SelColor = Color.BackgroundColor3
+
+
+						_function(picker.SelColor)
+					end
+						
+					function ColorLib:Get()
+						return picker.SelColor
+					end
+						
+					return ColorLib
 				end)
 
 
