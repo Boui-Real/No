@@ -697,13 +697,10 @@ function library:CreateWindow(name)
 
 			_GroupboxName.Text = 'Groupbox: ' .. name
 			
-			sometext_tab[side].CanvasSize = UDim2.new(0,0,0,(#sometext_tab[side]:GetChildren() - 2 * 100)
+			sometext_tab[side].CanvasSize = UDim2.new(0,0,0,((#sometext_tab[side]:GetChildren() - 2) * 100)
 
 
 			local GroupboxLib = {}
-
-
-
 
 
 			function GroupboxLib:CreateButton(name,_function)
