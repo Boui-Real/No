@@ -466,9 +466,6 @@ function library:CreateWindow(name)
 		Left.CanvasSize = UDim2.new(0, 0, 0, 0)
 
 
-
-
-
 		Right.Name = "Right"
 
 
@@ -699,6 +696,8 @@ function library:CreateWindow(name)
 
 
 			_GroupboxName.Text = 'Groupbox: ' .. name
+			
+			sometext_tab[side].CanvasSize = UDim2.new(0,0,0,(#sometext_tab[side]:GetChildren() - 2 * 100)
 
 
 			local GroupboxLib = {}
