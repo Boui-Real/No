@@ -48,7 +48,7 @@ function library:CreateWindow(name)
 	name = name or 'n'
 
 
-	
+
 
 
 	local UILib = Instance.new("ScreenGui")
@@ -72,19 +72,23 @@ function library:CreateWindow(name)
 	local Text_3 = Instance.new("TextLabel")
 
 
-	
+
 
 
 	local SliderDragging,WindowDragging,CPDragging = false,false,false
 
 
-	
+
 
 
 	UILib.Name = "UILib"
 
 
-	UILib.Parent = game.CoreGui
+	if pcall(function() UILib.Parent = game.CoreGui end) then
+		UILib.Parent = game.CoreGui
+	else
+		UILib.Parent = game.Players.LocalPlayer:WaitForChild('PlayerGui')
+	end
 
 
 	UILib.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
@@ -134,7 +138,7 @@ function library:CreateWindow(name)
 	CurrentTab.Size = UDim2.new(0.970582187, 0, 0.808757603, 0)
 
 
-	
+
 
 
 	Tabs.Name = "Tabs"
@@ -158,7 +162,7 @@ function library:CreateWindow(name)
 	Tabs.Size = UDim2.new(0.971000016, 0, 0.104999997, 0)
 
 
-	
+
 
 
 	Grid_Handler.Name = "Grid_Handler"
@@ -176,7 +180,7 @@ function library:CreateWindow(name)
 	Grid_Handler.CellSize = UDim2.new(0.200000003, 0, 0.5, 0)
 
 
-	
+
 
 
 	Title.Name = "Title"
@@ -197,7 +201,7 @@ function library:CreateWindow(name)
 	Title.Size = UDim2.new(0.971000016, 0, 0.0729999989, 0)
 
 
-	
+
 
 
 	Text_3.Name = "Text"
@@ -245,7 +249,7 @@ function library:CreateWindow(name)
 	Text_3.TextYAlignment = Enum.TextYAlignment.Top
 
 
-	
+
 
 
 	local dragToggle = nil
@@ -336,13 +340,13 @@ function library:CreateWindow(name)
 
 
 
-	
+
 
 
 	local WindowLib = {}
 
 
-	
+
 
 
 	function WindowLib:CreateTab(name)
@@ -351,7 +355,7 @@ function library:CreateWindow(name)
 		name = name or 'Tab'
 
 
-		
+
 
 
 		local sometext_btn = Instance.new("TextButton")
@@ -378,7 +382,7 @@ function library:CreateWindow(name)
 		local UIPadding_2 = Instance.new("UIPadding")
 
 
-		
+
 
 
 		sometext_btn.Name = name .. "_btn"
@@ -414,7 +418,7 @@ function library:CreateWindow(name)
 		sometext_btn.TextWrapped = true
 
 
-		
+
 
 
 		sometext_tab.Name = name .. "_tab"
@@ -432,7 +436,7 @@ function library:CreateWindow(name)
 		sometext_tab.Size = UDim2.new(1, 0, 1, 0)
 
 
-		
+
 
 
 		Left.Name = "Left"
@@ -462,7 +466,7 @@ function library:CreateWindow(name)
 		Left.CanvasSize = UDim2.new(0, 0, 0, 0)
 
 
-		
+
 
 
 		Right.Name = "Right"
@@ -492,7 +496,7 @@ function library:CreateWindow(name)
 		Right.CanvasSize = UDim2.new(0, 0, 0, 0)
 
 
-		
+
 
 
 		UIListLayout_2.Parent = Left
@@ -517,7 +521,7 @@ function library:CreateWindow(name)
 		UIPadding.PaddingTop = UDim.new(0, 1)
 
 
-		
+
 
 
 		UIListLayout_3.Parent = Right
@@ -542,7 +546,7 @@ function library:CreateWindow(name)
 		UIPadding_2.PaddingTop = UDim.new(0, 1)
 
 
-		
+
 
 
 		sometext_btn.MouseButton1Click:Connect(function()
@@ -572,7 +576,7 @@ function library:CreateWindow(name)
 		end)		
 
 
-		
+
 
 
 		Grid_Handler.CellSize = UDim2.new(1 / (#Tabs:GetChildren() - 1),0,0.5,0)
@@ -589,7 +593,7 @@ function library:CreateWindow(name)
 		local TabLib = {}
 
 
-		
+
 
 
 		function TabLib:CreateGroupbox(name,side)
@@ -607,7 +611,7 @@ function library:CreateWindow(name)
 			}
 
 
-			
+
 
 
 			name = name or 'Groupbox'
@@ -616,7 +620,7 @@ function library:CreateWindow(name)
 			side = side or (Sides[math.random(1,#Sides)])
 
 
-			
+
 
 
 			local Section = Instance.new("Frame")
@@ -628,7 +632,7 @@ function library:CreateWindow(name)
 			local _GroupboxName = Instance.new("TextLabel")
 
 
-			
+
 
 
 			Section.Name = "Section"
@@ -649,7 +653,7 @@ function library:CreateWindow(name)
 			Section.Size = UDim2.new(0.949999988, 0, 0, 0)
 
 
-			
+
 
 
 			UIListLayout.Parent = Section
@@ -661,7 +665,7 @@ function library:CreateWindow(name)
 			UIListLayout.Padding = UDim.new(0, 7)
 
 
-			
+
 
 
 			_GroupboxName.Name = '_GroupboxName'
@@ -697,19 +701,19 @@ function library:CreateWindow(name)
 			_GroupboxName.Text = 'Groupbox: ' .. name
 
 
-			
+
 
 
 			sometext_tab[side].CanvasSize = UDim2.new(0,0,0,(#sometext_tab[side]:GetChildren() - 2) * 60)
 
 
-			
+
 
 
 			local GroupboxLib = {}
 
 
-			
+
 
 
 			function GroupboxLib:CreateButton(name,_function)
@@ -721,13 +725,13 @@ function library:CreateWindow(name)
 				_function = _function or function() end
 
 
-				
+
 
 
 				local Button = Instance.new("TextButton")
 
 
-				
+
 
 
 				Button.Name = "Button"
@@ -763,7 +767,7 @@ function library:CreateWindow(name)
 				Button.Text = name
 
 
-				
+
 
 
 				if #Section:GetChildren() == 2 then
@@ -781,7 +785,7 @@ function library:CreateWindow(name)
 				end
 
 
-				
+
 
 
 				Button.MouseButton1Click:Connect(_function)
@@ -790,7 +794,7 @@ function library:CreateWindow(name)
 			end
 
 
-			
+
 
 
 			function GroupboxLib:CreateToggle(name,_function,def)
@@ -805,7 +809,7 @@ function library:CreateWindow(name)
 				_function = _function or function() end
 
 
-				
+
 
 
 				local Toggle = Instance.new("TextButton")
@@ -817,13 +821,13 @@ function library:CreateWindow(name)
 				local Text = Instance.new("TextLabel")
 
 
-				
+
 
 
 				local toggle = {state = def}
 
 
-				
+
 
 
 				Toggle.Name = "Toggle"
@@ -912,7 +916,7 @@ function library:CreateWindow(name)
 				Text.TextWrapped = true
 
 
-				
+
 
 
 				if #Section:GetChildren() == 2 then
@@ -930,7 +934,7 @@ function library:CreateWindow(name)
 				end
 
 
-				
+
 
 
 				Toggle.MouseButton1Click:Connect(function()
@@ -960,19 +964,19 @@ function library:CreateWindow(name)
 				end)
 
 
-				
+
 
 
 				library.Pointers[name] = toggle
 
 
-				
+
 
 
 				local ToggleLib = {}
 
 
-				
+
 
 
 				function ToggleLib:CreateKeyBind(def,__function)
@@ -984,13 +988,13 @@ function library:CreateWindow(name)
 					def = def or ''
 
 
-					
+
 
 
 					local keybind = {binding = false,bind = def}
 
 
-					
+
 
 
 					local Keybind = Instance.new("Frame")
@@ -999,7 +1003,7 @@ function library:CreateWindow(name)
 					local Text_2 = Instance.new("TextButton")
 
 
-					
+
 
 
 					Keybind.Name = "Keybind"
@@ -1054,7 +1058,7 @@ function library:CreateWindow(name)
 					Text_2.TextWrapped = true
 
 
-					
+
 
 
 					Text_2.MouseButton1Click:Connect(function()
@@ -1069,7 +1073,7 @@ function library:CreateWindow(name)
 					end)
 
 
-					
+
 
 
 					UIS.InputBegan:Connect(function(input)
@@ -1174,7 +1178,7 @@ function library:CreateWindow(name)
 					end)
 
 
-					
+
 
 
 					toggle['keybind'] = keybind
@@ -1183,13 +1187,13 @@ function library:CreateWindow(name)
 					library.Pointers[name] = toggle
 
 
-					
+
 
 
 					local KeybindLib = {}
 
 
-					
+
 
 
 					function KeybindLib:Set(val)
@@ -1201,7 +1205,7 @@ function library:CreateWindow(name)
 					end
 
 
-					
+
 
 
 					function KeybindLib:Get()
@@ -1213,7 +1217,7 @@ function library:CreateWindow(name)
 					end
 
 
-					
+
 
 
 					return KeybindLib
@@ -1222,7 +1226,7 @@ function library:CreateWindow(name)
 				end
 
 
-				
+
 
 
 				function ToggleLib:Set(val)
@@ -1252,7 +1256,7 @@ function library:CreateWindow(name)
 				end
 
 
-				
+
 
 
 				function ToggleLib:Get()
@@ -1264,7 +1268,7 @@ function library:CreateWindow(name)
 				end
 
 
-				
+
 
 
 				return ToggleLib
@@ -1273,7 +1277,7 @@ function library:CreateWindow(name)
 			end
 
 
-			
+
 
 
 			function GroupboxLib:CreateDropdown(name,options,_function,multi)
@@ -1291,13 +1295,13 @@ function library:CreateWindow(name)
 				multi = multi or false
 
 
-				
+
 
 
 				local dropdown = {selected = '',opened = false,option = options[1]}
 
 
-				
+
 
 
 				local Dropdown = Instance.new("TextButton")
@@ -1315,7 +1319,7 @@ function library:CreateWindow(name)
 				local List = Instance.new("UIListLayout")
 
 
-				
+
 
 
 				Dropdown.Name = "Dropdown"
@@ -1438,13 +1442,13 @@ function library:CreateWindow(name)
 				Drop.ZIndex = 6
 
 
-				
+
 
 
 				List.Parent = Drop
 
 
-				
+
 
 
 				for _,v in pairs(options) do
@@ -1453,7 +1457,7 @@ function library:CreateWindow(name)
 					local Option = Instance.new("TextButton")
 
 
-					
+
 
 
 					Option.Name = "Option"
@@ -1489,7 +1493,7 @@ function library:CreateWindow(name)
 					Option.Text = v
 
 
-					
+
 
 
 					Drop.Size = UDim2.new(0.845,0,0,(#Drop:GetChildren() - 1) * 25)
@@ -1498,7 +1502,7 @@ function library:CreateWindow(name)
 				end
 
 
-				
+
 
 
 				if #Section:GetChildren() == 2 then
@@ -1516,7 +1520,7 @@ function library:CreateWindow(name)
 				end
 
 
-				
+
 
 
 				local function _Dropdown()
@@ -1601,31 +1605,31 @@ function library:CreateWindow(name)
 				end
 
 
-				
+
 
 
 				Dropdown.MouseButton1Click:Connect(_Dropdown)
 
 
-				
+
 
 
 				Btn.MouseButton1Click:Connect(_Dropdown)
 
 
-				
+
 
 
 				library.Pointers[name] = dropdown
 
 
-				
+
 
 
 				local DropdownLib = {}
 
 
-				
+
 
 
 				function DropdownLib:Set(val)
@@ -1640,7 +1644,7 @@ function library:CreateWindow(name)
 				end
 
 
-				
+
 
 
 				function DropdownLib:Get()
@@ -1652,7 +1656,7 @@ function library:CreateWindow(name)
 				end
 
 
-				
+
 
 
 				return DropdownLib
@@ -1661,7 +1665,7 @@ function library:CreateWindow(name)
 			end
 
 
-			
+
 
 
 			function GroupboxLib:CreateSlider(name,min,max,val,_function)
@@ -1682,13 +1686,13 @@ function library:CreateWindow(name)
 				_function = _function or function() end
 
 
-				
+
 
 
 				local slider = {value = val}
 
 
-				
+
 
 
 				local Slider = Instance.new("TextButton")
@@ -1706,7 +1710,7 @@ function library:CreateWindow(name)
 				local _Text = Instance.new("TextLabel")
 
 
-				
+
 
 
 				Slider.Name = "Slider"
@@ -1832,7 +1836,7 @@ function library:CreateWindow(name)
 				Dragger.ZIndex = 4
 
 
-				
+
 
 
 				_Text.Name = "_Text"
@@ -1871,7 +1875,7 @@ function library:CreateWindow(name)
 				_Text.TextWrapped = true
 
 
-				
+
 
 
 				local dragging = false
@@ -1880,7 +1884,7 @@ function library:CreateWindow(name)
 				local dragValue = 0
 
 
-				
+
 
 
 				Dragger.MouseButton1Down:Connect(function()
@@ -1895,7 +1899,7 @@ function library:CreateWindow(name)
 				end)
 
 
-				
+
 
 
 				if #Section:GetChildren() == 2 then
@@ -1913,7 +1917,7 @@ function library:CreateWindow(name)
 				end
 
 
-				
+
 
 
 				local function Slide(input)
@@ -1943,7 +1947,7 @@ function library:CreateWindow(name)
 				end
 
 
-				
+
 
 
 				UIS.InputChanged:Connect(function(input)
@@ -1961,7 +1965,7 @@ function library:CreateWindow(name)
 				end)
 
 
-				
+
 
 
 				UIS.InputEnded:Connect(function(input)
@@ -1997,7 +2001,7 @@ function library:CreateWindow(name)
 				end)
 
 
-				
+
 
 
 				Dragger.MouseButton1Up:Connect(function()
@@ -2021,7 +2025,7 @@ function library:CreateWindow(name)
 				end)
 
 
-				
+
 
 
 				Value.Changed:Connect(function(prop)
@@ -2048,7 +2052,7 @@ function library:CreateWindow(name)
 						end
 
 
-						
+
 
 
 						dragValue = tonumber(val)
@@ -2069,13 +2073,13 @@ function library:CreateWindow(name)
 				end)
 
 
-				
+
 
 
 				local SliderLib = {}
 
 
-				
+
 
 
 				function SliderLib:Set(val)
@@ -2090,7 +2094,7 @@ function library:CreateWindow(name)
 				end
 
 
-				
+
 
 
 				function SliderLib:Get()
@@ -2102,7 +2106,7 @@ function library:CreateWindow(name)
 				end
 
 
-				
+
 
 
 				return SliderLib
@@ -2111,7 +2115,7 @@ function library:CreateWindow(name)
 			end
 
 
-			
+
 
 
 			function GroupboxLib:CreateTextbox(name,text,_function)
@@ -2126,13 +2130,13 @@ function library:CreateWindow(name)
 				_function = _function or function() end
 
 
-				
+
 
 
 				local textbox = {text = text}
 
 
-				
+
 
 
 				local TextBox = Instance.new("TextButton")
@@ -2147,7 +2151,7 @@ function library:CreateWindow(name)
 				local _Box = Instance.new("TextBox")
 
 
-				
+
 
 
 				TextBox.Name = "TextBox"
@@ -2288,7 +2292,7 @@ function library:CreateWindow(name)
 				end)
 
 
-				
+
 
 
 				if #Section:GetChildren() == 2 then
@@ -2306,19 +2310,19 @@ function library:CreateWindow(name)
 				end
 
 
-				
+
 
 
 				library.Pointers[name] = textbox
 
 
-				
+
 
 
 				local TextLib = {}
 
 
-				
+
 
 
 				function TextLib:Set(val)
@@ -2336,7 +2340,7 @@ function library:CreateWindow(name)
 				end
 
 
-				
+
 
 
 				function TextLib:Get()
@@ -2348,7 +2352,7 @@ function library:CreateWindow(name)
 				end
 
 
-				
+
 
 
 				return TextLib
@@ -2357,13 +2361,13 @@ function library:CreateWindow(name)
 			end
 
 
-			
+
 
 
 			function GroupboxLib:CreateColorPicker(name,def,_function)
 
 
-				name = name or 'Color Picekr'
+				name = name or 'Color Picker'
 
 
 				def = def or Color3.fromRGB(255,255,255)
@@ -2372,7 +2376,7 @@ function library:CreateWindow(name)
 				_function = _function or function() end
 
 
-				
+
 
 
 				local ColorPicker = Instance.new("TextButton")
@@ -2396,7 +2400,7 @@ function library:CreateWindow(name)
 				local UIGradient = Instance.new("UIGradient")
 
 
-				
+
 
 
 				local picker = {H = 5,S = 1,V = 1,SelColor = def}
@@ -2437,7 +2441,7 @@ function library:CreateWindow(name)
 
 
 				ColorPicker.TextWrapped = true
-				
+
 				ColorPicker.ZIndex = 10
 
 
@@ -2586,12 +2590,16 @@ function library:CreateWindow(name)
 
 
 					ColorSlider.Visible = not ColorSlider.Visible
-
-
+					
+					if ColorPicker_2.Visible == true and ColorSlider.Visible == true then
+						Section.ZIndex = 5
+					else
+						Section.ZIndex = 1
+					end
 				end)
 
 
-				
+
 
 
 				local function NewColor()
@@ -2612,23 +2620,11 @@ function library:CreateWindow(name)
 				end
 
 
-				
-
-
-				
-
 
 				local dragging = false
 
 
 				local cinput = nil
-
-
-				
-
-
-				
-
 
 				Gradient.InputBegan:Connect(function(input)
 
@@ -2645,7 +2641,7 @@ function library:CreateWindow(name)
 						end
 
 
-						
+
 
 
 						dragging = true
@@ -2654,7 +2650,7 @@ function library:CreateWindow(name)
 						CPDragging = true
 
 
-						
+
 
 
 						cinput = game:GetService("RunService").RenderStepped:Connect(function()
@@ -2693,7 +2689,7 @@ function library:CreateWindow(name)
 				end)
 
 
-				
+
 
 
 				Gradient.InputEnded:Connect(function(input)
@@ -2724,13 +2720,13 @@ function library:CreateWindow(name)
 				end)
 
 
-				
+
 
 
 				local hinput = nil
 
 
-				
+
 
 
 				ColorSlider.InputBegan:Connect(function(input)
@@ -2806,9 +2802,9 @@ function library:CreateWindow(name)
 
 
 					end
-						
+
 					local ColorLib = {}
-					
+
 					function ColorLib:Set(val)
 						Color.BackgroundColor3 = val
 
@@ -2821,11 +2817,11 @@ function library:CreateWindow(name)
 
 						_function(picker.SelColor)
 					end
-						
+
 					function ColorLib:Get()
 						return picker.SelColor
 					end
-						
+
 					return ColorLib
 				end)
 
@@ -2833,7 +2829,7 @@ function library:CreateWindow(name)
 			end
 
 
-			
+
 
 
 			return GroupboxLib
@@ -2842,7 +2838,7 @@ function library:CreateWindow(name)
 		end
 
 
-		
+
 
 
 		return TabLib
@@ -2851,7 +2847,7 @@ function library:CreateWindow(name)
 	end
 
 
-	
+
 
 
 	return WindowLib,UILib
