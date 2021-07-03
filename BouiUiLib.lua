@@ -466,6 +466,9 @@ function library:CreateWindow(name)
 		Left.CanvasSize = UDim2.new(0, 0, 0, 0)
 
 
+
+
+
 		Right.Name = "Right"
 
 
@@ -696,11 +699,21 @@ function library:CreateWindow(name)
 
 
 			_GroupboxName.Text = 'Groupbox: ' .. name
-			
-			sometext_tab[side].CanvasSize = UDim2.new(0,0,0,((#sometext_tab[side]:GetChildren() - 2) * 100)
+
+
+
+
+
+			sometext_tab[side].CanvasSize = UDim2.new(0,0,0,(#sometext_tab[side]:GetChildren() - 2) * 100)
+
+
+
 
 
 			local GroupboxLib = {}
+
+
+
 
 
 			function GroupboxLib:CreateButton(name,_function)
@@ -770,6 +783,8 @@ function library:CreateWindow(name)
 
 
 				end
+
+
 
 
 
@@ -919,7 +934,7 @@ function library:CreateWindow(name)
 				end
 
 
-				
+
 
 
 				Toggle.MouseButton1Click:Connect(function()
@@ -1342,8 +1357,11 @@ function library:CreateWindow(name)
 
 				Dropdown.TextWrapped = true
 
-				
-				
+
+				Dropdown.ZIndex = 5
+
+
+
 				Toggle_2.Name = "Toggle"
 
 
@@ -1502,7 +1520,7 @@ function library:CreateWindow(name)
 				end
 
 
-				
+
 
 
 				local function _Dropdown()
@@ -1511,13 +1529,7 @@ function library:CreateWindow(name)
 					dropdown.opened = not dropdown.opened
 
 
-					if dropdown.opened == true then
-						Btn.Text = library.Symbols.Dropdown.Dropped
-						Dropdown.ZIndex = 5
-					else
-						Btn.Text = library.Symbols.Dropdown.Drop
-						Dropdown.ZIndex = 1
-					end
+					Btn.Text = library.Symbols.Dropdown.Dropped
 
 
 
@@ -1905,7 +1917,7 @@ function library:CreateWindow(name)
 				end
 
 
-				
+
 
 
 				local function Slide(input)
@@ -2298,7 +2310,7 @@ function library:CreateWindow(name)
 				end
 
 
-				
+
 
 
 				library.Pointers[name] = textbox
@@ -2570,9 +2582,7 @@ function library:CreateWindow(name)
 
 				end
 
-				
-				
-				
+
 				ColorPicker.MouseButton1Click:Connect(function()
 
 
