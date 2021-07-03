@@ -701,15 +701,6 @@ function library:CreateWindow(name)
 			_GroupboxName.Text = 'Groupbox: ' .. name
 
 
-
-
-
-			sometext_tab[side].CanvasSize = UDim2.new(0,0,0,((#sometext_tab[side]:GetChildren() - 2) + (math.floor(Section.Size.Y / 10))) * 60)
-
-
-
-
-
 			local GroupboxLib = {}
 
 
@@ -784,8 +775,6 @@ function library:CreateWindow(name)
 
 				end
 
-
-				sometext_tab[side].CanvasSize = UDim2.new(0,0,0,((#sometext_tab[side]:GetChildren() - 2) + (math.floor(Section.Size.Y / 10))) * 60)
 
 
 				Button.MouseButton1Click:Connect(_function)
@@ -934,7 +923,7 @@ function library:CreateWindow(name)
 				end
 
 
-				sometext_tab[side].CanvasSize = UDim2.new(0,0,0,((#sometext_tab[side]:GetChildren() - 2) + (math.floor(Section.Size.Y / 10))) * 60)
+				
 
 
 				Toggle.MouseButton1Click:Connect(function()
@@ -1517,7 +1506,7 @@ function library:CreateWindow(name)
 				end
 
 
-				sometext_tab[side].CanvasSize = UDim2.new(0,0,0,((#sometext_tab[side]:GetChildren() - 2) + (math.floor(Section.Size.Y / 10))) * 60)
+				
 
 
 				local function _Dropdown()
@@ -1920,7 +1909,7 @@ function library:CreateWindow(name)
 				end
 
 
-				sometext_tab[side].CanvasSize = UDim2.new(0,0,0,((#sometext_tab[side]:GetChildren() - 2) + (math.floor(Section.Size.Y / 10))) * 60)
+				
 
 
 				local function Slide(input)
@@ -2313,7 +2302,7 @@ function library:CreateWindow(name)
 				end
 
 
-				sometext_tab[side].CanvasSize = UDim2.new(0,0,0,((#sometext_tab[side]:GetChildren() - 2) + (math.floor(Section.Size.Y / 10))) * 60)
+				
 
 
 				library.Pointers[name] = textbox
@@ -2585,7 +2574,7 @@ function library:CreateWindow(name)
 
 				end
 
-				sometext_tab[side].CanvasSize = UDim2.new(0,0,0,((#sometext_tab[side]:GetChildren() - 2) + (math.floor(Section.Size.Y / 10))) * 60)
+				
 				
 				
 				ColorPicker.MouseButton1Click:Connect(function()
