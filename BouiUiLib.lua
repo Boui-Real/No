@@ -967,7 +967,6 @@ function library:CreateWindow(name)
 
 
 
-				library.Pointers[name] = toggle
 
 
 
@@ -976,7 +975,7 @@ function library:CreateWindow(name)
 				local ToggleLib = {}
 
 
-
+				library.Pointers[name] = ToggleLib
 
 
 				function ToggleLib:CreateKeyBind(def,__function)
@@ -1181,10 +1180,7 @@ function library:CreateWindow(name)
 
 
 
-					toggle['keybind'] = keybind
-
-
-					library.Pointers[name] = toggle
+					
 
 
 
@@ -1193,7 +1189,8 @@ function library:CreateWindow(name)
 					local KeybindLib = {}
 
 
-
+					ToggleLib['keybind'] = keybind
+					library.Pointers[name] = ToggleLib
 
 
 					function KeybindLib:Set(val)
@@ -1630,14 +1627,15 @@ function library:CreateWindow(name)
 
 
 
-				library.Pointers[name] = dropdown
+				
 
 
 
 
 
 				local DropdownLib = {}
-
+				
+				library.Pointers[name] = DropdownLib
 
 				function DropdownLib:Refresh(newoptions)
 					Drop:ClearAllChildren()
@@ -2131,7 +2129,7 @@ function library:CreateWindow(name)
 
 				local SliderLib = {}
 
-
+				library.Pointers[name] = SliderLib
 
 
 
@@ -2366,7 +2364,7 @@ function library:CreateWindow(name)
 
 
 
-				library.Pointers[name] = textbox
+				
 
 
 
@@ -2375,7 +2373,7 @@ function library:CreateWindow(name)
 				local TextLib = {}
 
 
-
+				library.Pointers[name] = TextLib
 
 
 				function TextLib:Set(val)
@@ -2857,6 +2855,8 @@ function library:CreateWindow(name)
 					end
 
 					local ColorLib = {}
+						
+					library.Pointers[name] = ColorLib
 
 					function ColorLib:Set(val)
 						Color.BackgroundColor3 = val
