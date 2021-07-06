@@ -1809,16 +1809,19 @@ function library:CreateWindow(name)
 				Dragger.Parent = Slider_2
 
 
-				Dragger.BackgroundColor3 = Color3.fromRGB(33, 33, 33)
+				Dragger.BackgroundColor3 = Color3.fromRGB(0, 85, 255)
 
 
 				Dragger.BorderColor3 = Color3.fromRGB(0, 85, 255)
+				
+				
+				Dragger.BorderSizePixel = 0
 
 
-				Dragger.Position = UDim2.new(0, 0, -0.102830172, 0)
+				Dragger.Position = UDim2.new(0, 0, 0, 0)
 
 
-				Dragger.Size = UDim2.new(0.1, 0, 1.20000005, 0)
+				Dragger.Size = UDim2.new(0, 0, 1, 0)
 
 
 				Dragger.Font = Enum.Font.SourceSans
@@ -1926,7 +1929,7 @@ function library:CreateWindow(name)
 					local Pos = UDim2.new(math.clamp((input.Position.X - Slider.AbsolutePosition.X) / Slider.AbsoluteSize.X, 0, 1), 0, -0.103, 0)
 
 
-					Dragger.Position = Pos
+					Dragger.Size = Pos
 
 
 					local s = math.floor(((Pos.X.Scale * max) / max) * (max - min) + min)
