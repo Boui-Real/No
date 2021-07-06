@@ -2611,7 +2611,7 @@ function library:CreateWindow(name)
 
 				end
 
-
+				NewColor()
 
 				local dragging = false
 
@@ -2845,6 +2845,16 @@ function library:CreateWindow(name)
 	return WindowLib,UILib
 
 
+end
+
+function library:LoadConfig(cfg)
+	table.foreach(cfg, function(a,b)
+		if library.pointers[a] then
+			spawn(function() library.Pointers[a]:Set(b) end)
+		else
+			warn("[ERROR] Config (Object Not Found):", a, b)
+		end
+	end)	
 end
 
 return library
