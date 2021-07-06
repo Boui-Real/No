@@ -1537,6 +1537,9 @@ function library:CreateWindow(name)
 
 
 						Drop.Visible = true
+						
+						Dropdown.ZIndex = 5
+						Section.ZIndex = 6
 
 
 						for i,v in pairs(Drop:GetChildren()) do
@@ -1576,6 +1579,8 @@ function library:CreateWindow(name)
 
 
 								Btn.Text = library.Symbols.Dropdown.Drop
+								Dropdown.ZIndex = 1
+								Section.ZIndex = 1
 
 
 								Drop.Visible = false
@@ -1588,6 +1593,8 @@ function library:CreateWindow(name)
 
 
 								Btn.Text = library.Symbols.Dropdown.Drop
+								Dropdown.ZIndex = 1
+								Section.ZIndex = 1
 
 
 								Drop.Visible = false
@@ -1597,7 +1604,10 @@ function library:CreateWindow(name)
 
 
 						end
-
+					else
+						
+						Dropdown.ZIndex = 1
+						Section.ZIndex = 1
 
 					end
 
@@ -1629,7 +1639,58 @@ function library:CreateWindow(name)
 				local DropdownLib = {}
 
 
+				function DropdownLib:Refresh(newoptions)
+					Drop:ClearAllChildren()
+					for _,v in pairs(options) do
 
+
+						local Option = Instance.new("TextButton")
+
+
+
+
+
+						Option.Name = "Option"
+
+
+						Option.Parent = Drop
+
+
+						Option.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+
+
+						Option.BackgroundTransparency = 1.000
+
+
+						Option.Size = UDim2.new(1, 0, 0, 25)
+
+
+						Option.Font = Enum.Font.TitilliumWeb
+
+
+						Option.TextColor3 = Color3.fromRGB(255, 255, 255)
+
+
+						Option.TextScaled = true
+
+
+						Option.TextSize = 14.000
+
+
+						Option.TextWrapped = true
+
+
+						Option.Text = v
+
+
+
+
+
+						Drop.Size = UDim2.new(0.845,0,0,(#Drop:GetChildren() - 1) * 25)
+
+
+					end
+				end
 
 
 				function DropdownLib:Set(val)
