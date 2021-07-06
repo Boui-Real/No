@@ -1890,21 +1890,6 @@ function library:CreateWindow(name)
 
 
 
-				Dragger.MouseButton1Down:Connect(function()
-
-
-					dragging = true
-
-
-					SliderDragging = true
-
-
-				end)
-
-
-
-
-
 				if #Section:GetChildren() == 2 then
 
 
@@ -2004,30 +1989,31 @@ function library:CreateWindow(name)
 				end)
 
 
-
-
-
-				Dragger.MouseButton1Up:Connect(function()
-
-
-					SliderDragging = false
-
-
-					dragging = false
-
-
-					slider.value = dragValue
-
-
-					Value.Text = slider.value
-
-
-					_function(slider.value)
-
-
+				Slider_2.InputBegan:Connect(function(input)
+					if input.UserInputType == Enum.UserInputType.MouseButton1 then
+                        			Slide(input)
+                        			dragging = true
+                        			SliderDragging = true
+                    			end
 				end)
+				
+				Slider_2.InputEnded:Connect(function(input)
+					if input.UserInputType == Enum.UserInputType.MouseButton1 then
+                        			SliderDragging = false
 
 
+						dragging = false
+
+
+						slider.value = dragValue
+
+
+						Value.Text = slider.value
+
+
+						_function(slider.value)
+                    			end
+				end)
 
 
 
