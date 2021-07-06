@@ -1639,6 +1639,8 @@ function library:CreateWindow(name)
 
 				function DropdownLib:Refresh(newoptions)
 					Drop:ClearAllChildren()
+					local List = Instance.new("UIListLayout")
+					List.Parent = Drop
 					for _,v in pairs(options) do
 
 
