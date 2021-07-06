@@ -2023,20 +2023,23 @@ function library:CreateWindow(name)
 					if prop == 'Text' then
 
 
-						local val = Value.Text
+						local val = tonumber(Value.Text)
 
 
 						if val > max then
 
 
 							val = max
+								
+							Value.Text = max
 
 
 						elseif val < min then
 
 
 							val = min
-
+							
+							Value.Text = min
 
 						end
 
