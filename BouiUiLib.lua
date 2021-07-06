@@ -2912,7 +2912,7 @@ end
 
 function library:LoadConfig(cfg)
 	table.foreach(cfg, function(a,b)
-		if library.pointers[a] then
+		if library.Pointers[a] then
 			spawn(function() library.Pointers[a]:Set(b) end)
 		else
 			warn("[ERROR] Config (Object Not Found):", a, b)
