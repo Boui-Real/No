@@ -5,35 +5,23 @@ local library = {
 
 
 	Symbols = {
-
-
 		Checkbox = '✔';
-
 
 		Dropdown = {
 
-
 			Dropped = '△';
-
 
 			Drop = '▽';
 
-
 		}
-
 
 	};
 
-
 	BlacklistedKeybinds = {'W','A','S','D','Space','Delete','Backspace','Escape'};
-
 
 	AlwaysBlacklistedKeybinds = {'Unknown','Slash'};
 
-
 	UseBlacklistedKeybinds = false;
-
-
 }
 
 
@@ -114,6 +102,18 @@ function library:CreateWindow(name)
 
 
 	MainFrame.Size = UDim2.new(0.369200915, 0, 0.678181827, 0)
+	
+	local Background_Main = Instance.new("ImageLabel",MainFrame)
+	
+	Background_Main.Image = 'http://www.roblox.com/asset/?id=7530940902'
+	
+	Background_Main.BorderSizePixel = 0
+	
+	Background_Main.BackgroundTransparency = 1
+	
+	Background_Main.ZIndex = -1
+	
+	Background_Main.Size = UDim2.new(1,0,1,0)
 
 
 
@@ -353,10 +353,8 @@ function library:CreateWindow(name)
 
 
 		name = name or 'Tab'
-
-
-
-
+		
+		local tab_name = name
 
 		local sometext_btn = Instance.new("TextButton")
 
@@ -618,10 +616,8 @@ function library:CreateWindow(name)
 
 
 			side = side or (Sides[math.random(1,#Sides)])
-
-
-
-
+			
+			local groupbox_name = name
 
 			local Section = Instance.new("Frame")
 
@@ -963,19 +959,9 @@ function library:CreateWindow(name)
 
 				end)
 
-
-
-
-
-
-
-
-
-
 				local ToggleLib = {}
-
-
-				library.Pointers[name] = ToggleLib
+				
+				library.Pointers[tab_name .. '_' .. groupbox_name .. '_' .. name] = ToggleLib
 
 
 				function ToggleLib:CreateKeyBind(def,__function)
@@ -1176,106 +1162,46 @@ function library:CreateWindow(name)
 
 					end)
 
-
-
-
-
-					
-
-
-
-
-
 					local KeybindLib = {}
 
-
-					ToggleLib['keybind'] = keybind
-					library.Pointers[name] = ToggleLib
+					ToggleLib['Keybind'] = KeybindLib
 
 
 					function KeybindLib:Set(val)
 
 
 						keybind.bind = val
-
-
+	
+						Text_2.Text = '[' .. keybind.bind .. ']'
 					end
-
-
-
-
 
 					function KeybindLib:Get()
-
-
 						return keybind.bind
-
-
 					end
-
-
-
-
 
 					return KeybindLib
 
 
 				end
 
-
-
-
-
 				function ToggleLib:Set(val)
-
-
 					toggle.state = val
 
-
 					if toggle.state == true then
-
-
 						Text.Text = 'X'
-
-
 					else
-
-
 						Text.Text = ''
-
-
 					end
-
-
 					_function(toggle.state)
-
-
 				end
-
-
-
-
 
 				function ToggleLib:Get()
-
-
 					return toggle.state
-
-
 				end
-
-
-
-
-
+				
 				return ToggleLib
 
-
 			end
-
-
-
-
 
 			function GroupboxLib:CreateDropdown(name,options,_function,multi)
 
@@ -1291,132 +1217,81 @@ function library:CreateWindow(name)
 
 				multi = multi or false
 
-
-
-
-
 				local dropdown = {selected = '',opened = false,option = options[1]}
-
-
-
-
 
 				local Dropdown = Instance.new("TextButton")
 
-
 				local Toggle_2 = Instance.new("Frame")
-
 
 				local Btn = Instance.new("TextButton")
 
-
 				local Drop = Instance.new("Frame")
-
 
 				local List = Instance.new("UIListLayout")
 
-
-
-
-
 				Dropdown.Name = "Dropdown"
-
 
 				Dropdown.Parent = Section
 
-
 				Dropdown.BackgroundColor3 = Color3.fromRGB(33, 33, 33)
-
 
 				Dropdown.BorderColor3 = Color3.fromRGB(0, 85, 255)
 
-
 				Dropdown.Position = UDim2.new(-0.0141008906, 0, 0, 0)
-
 
 				Dropdown.Size = UDim2.new(1, 0, 0, 25)
 
-
 				Dropdown.Font = Enum.Font.TitilliumWeb
-
 
 				Dropdown.Text = name .. ' , Selected: ' .. dropdown.option
 
-
 				Dropdown.TextColor3 = Color3.fromRGB(255, 255, 255)
-
 
 				Dropdown.TextScaled = true
 
-
 				Dropdown.TextSize = 14.000
-
 
 				Dropdown.TextWrapped = true
 
-
 				Dropdown.ZIndex = 5
-
-
 
 				Toggle_2.Name = "Toggle"
 
-
 				Toggle_2.Parent = Dropdown
-
 
 				Toggle_2.BackgroundColor3 = Color3.fromRGB(33, 33, 33)
 
-
 				Toggle_2.BackgroundTransparency = 1.000
-
 
 				Toggle_2.BorderColor3 = Color3.fromRGB(0, 85, 255)
 
-
 				Toggle_2.Position = UDim2.new(0.0385014825, 0, 0.148999989, 0)
-
 
 				Toggle_2.Size = UDim2.new(0.0799999982, 0, 0.699999988, 0)
 
-
-
 				Btn.Name = "Btn"
-
 
 				Btn.Parent = Toggle_2
 
-
 				Btn.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-
 
 				Btn.BackgroundTransparency = 1.000
 
-
 				Btn.Size = UDim2.new(1, 0, 1, 0)
-
 
 				Btn.Font = Enum.Font.TitilliumWeb
 
-
 				Btn.Text = "▽"
-
 
 				Btn.TextColor3 = Color3.fromRGB(255, 255, 255)
 
-
 				Btn.TextScaled = true
-
 
 				Btn.TextSize = 14.000
 
-
 				Btn.TextWrapped = true
 
-
-
 				Drop.Name = "Drop"
-
 
 				Drop.Parent = Dropdown
 
@@ -1534,9 +1409,6 @@ function library:CreateWindow(name)
 
 
 						Drop.Visible = true
-						
-						Dropdown.ZIndex = 5
-						Section.ZIndex = 6
 
 
 						for i,v in pairs(Drop:GetChildren()) do
@@ -1576,8 +1448,6 @@ function library:CreateWindow(name)
 
 
 								Btn.Text = library.Symbols.Dropdown.Drop
-								Dropdown.ZIndex = 1
-								Section.ZIndex = 1
 
 
 								Drop.Visible = false
@@ -1590,8 +1460,6 @@ function library:CreateWindow(name)
 
 
 								Btn.Text = library.Symbols.Dropdown.Drop
-								Dropdown.ZIndex = 1
-								Section.ZIndex = 1
 
 
 								Drop.Visible = false
@@ -1601,10 +1469,7 @@ function library:CreateWindow(name)
 
 
 						end
-					else
-						
-						Dropdown.ZIndex = 1
-						Section.ZIndex = 1
+
 
 					end
 
@@ -1627,70 +1492,16 @@ function library:CreateWindow(name)
 
 
 
-				
+				library.Pointers[name] = dropdown
 
 
 
 
 
 				local DropdownLib = {}
-				
-				library.Pointers[name] = DropdownLib
-
-				function DropdownLib:Refresh(newoptions)
-					Drop:ClearAllChildren()
-					local List = Instance.new("UIListLayout")
-					List.Parent = Drop
-					for _,v in pairs(options) do
-
-
-						local Option = Instance.new("TextButton")
 
 
 
-
-
-						Option.Name = "Option"
-
-
-						Option.Parent = Drop
-
-
-						Option.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-
-
-						Option.BackgroundTransparency = 1.000
-
-
-						Option.Size = UDim2.new(1, 0, 0, 25)
-
-
-						Option.Font = Enum.Font.TitilliumWeb
-
-
-						Option.TextColor3 = Color3.fromRGB(255, 255, 255)
-
-
-						Option.TextScaled = true
-
-
-						Option.TextSize = 14.000
-
-
-						Option.TextWrapped = true
-
-
-						Option.Text = v
-
-
-
-
-
-						Drop.Size = UDim2.new(0.845,0,0,(#Drop:GetChildren() - 1) * 25)
-
-
-					end
-				end
 
 
 				function DropdownLib:Set(val)
@@ -1746,15 +1557,7 @@ function library:CreateWindow(name)
 
 				_function = _function or function() end
 
-
-
-
-
 				local slider = {value = val}
-
-
-
-
 
 				local Slider = Instance.new("TextButton")
 
@@ -1769,10 +1572,6 @@ function library:CreateWindow(name)
 
 
 				local _Text = Instance.new("TextLabel")
-
-
-
-
 
 				Slider.Name = "Slider"
 
@@ -1870,19 +1669,16 @@ function library:CreateWindow(name)
 				Dragger.Parent = Slider_2
 
 
-				Dragger.BackgroundColor3 = Color3.fromRGB(0, 85, 255)
+				Dragger.BackgroundColor3 = Color3.fromRGB(0, 145, 255)
 
 
-				Dragger.BorderColor3 = Color3.fromRGB(0, 85, 255)
-				
-				
 				Dragger.BorderSizePixel = 0
 
 
 				Dragger.Position = UDim2.new(0, 0, 0, 0)
 
 
-				Dragger.Size = UDim2.new(0, 0, 1, 0)
+				Dragger.Size = UDim2.new(val / max, 0, 1, 0)
 
 
 				Dragger.Font = Enum.Font.SourceSans
@@ -1891,7 +1687,7 @@ function library:CreateWindow(name)
 				Dragger.Text = ""
 
 
-				Dragger.TextColor3 = Color3.fromRGB(0, 0, 0)
+				Dragger.TextColor3 = Color3.fromRGB(0,0,0)
 
 
 				Dragger.TextSize = 14.000
@@ -1899,53 +1695,51 @@ function library:CreateWindow(name)
 
 				Dragger.ZIndex = 4
 
-
-
-
-
 				_Text.Name = "_Text"
-
 
 				_Text.Parent = Slider
 
-
 				_Text.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-
 
 				_Text.BackgroundTransparency = 1.000
 
-
 				_Text.Position = UDim2.new(0.0376023762, 0, 0, 0)
-
 
 				_Text.Size = UDim2.new(0.22570917, 0, 1, 0)
 
-
 				_Text.Font = Enum.Font.TitilliumWeb
-
 
 				_Text.Text = name
 
-
 				_Text.TextColor3 = Color3.fromRGB(255, 255, 255)
-
 
 				_Text.TextScaled = true
 
-
 				_Text.TextSize = 14.000
-
 
 				_Text.TextWrapped = true
 
-
-
-
-
 				local dragging = false
 
-
 				local dragValue = 0
+
+				Dragger.MouseButton1Down:Connect(function()
+
+
+					dragging = true
+
+
+					SliderDragging = true
+
+
+				end)
+				
+				Slider.MouseButton1Down:Connect(function()
+					if val / max == 0 then
+						dragging = true
+						SliderDragging = true
+					end
+				end)
 
 
 
@@ -1972,7 +1766,7 @@ function library:CreateWindow(name)
 				local function Slide(input)
 
 
-					local Pos = UDim2.new(math.clamp((input.Position.X - Slider.AbsolutePosition.X) / Slider.AbsoluteSize.X, 0, 1), 0, -0.103, 0)
+					local Pos = UDim2.new(math.clamp((input.Position.X - Slider.AbsolutePosition.X) / Slider.AbsoluteSize.X, 0, 1), 0, 1, 0)
 
 
 					Dragger.Size = Pos
@@ -2050,57 +1844,53 @@ function library:CreateWindow(name)
 				end)
 
 
-				Slider_2.InputBegan:Connect(function(input)
-					if input.UserInputType == Enum.UserInputType.MouseButton1 then
-                        			Slide(input)
-                        			dragging = true
-                        			SliderDragging = true
-                    			end
+
+
+
+				Dragger.MouseButton1Up:Connect(function()
+
+
+					SliderDragging = false
+
+
+					dragging = false
+
+
+					slider.value = dragValue
+
+
+					Value.Text = slider.value
+
+
+					_function(slider.value)
+
+
 				end)
-				
-				Slider_2.InputEnded:Connect(function(input)
-					if input.UserInputType == Enum.UserInputType.MouseButton1 then
-                        			SliderDragging = false
 
 
-						dragging = false
-
-
-						slider.value = dragValue
-
-
-						Value.Text = slider.value
-
-
-						_function(slider.value)
-                    			end
-				end)
 
 
 
 				Value.Changed:Connect(function(prop)
 
 
-					if prop == 'Text' then
+					if prop == 'Text' and tonumber(Value.Text) ~= nil and dragging == false then
 
 
-						local val = tonumber(Value.Text)
+						local val = Value.Text
 
 
-						if val > max then
+						if tonumber(val) > max then
 
 
 							val = max
-								
-							Value.Text = max
 
 
-						elseif val < min then
+						elseif tonumber(val) < min then
 
 
 							val = min
-							
-							Value.Text = min
+
 
 						end
 
@@ -2115,6 +1905,8 @@ function library:CreateWindow(name)
 
 
 						Value.Text = slider.value
+						
+						Dragger.Size = UDim2.new(val / max,0,1,0)
 
 
 						_function(slider.value)
@@ -2124,6 +1916,12 @@ function library:CreateWindow(name)
 
 
 				end)
+				
+				Value.FocusLost:Connect(function()
+					if tonumber(Value.Text) == nil then
+						Value.Text = tostring(val)
+					end
+				end)
 
 
 
@@ -2131,8 +1929,8 @@ function library:CreateWindow(name)
 
 				local SliderLib = {}
 
-				library.Pointers[name] = SliderLib
 
+				
 
 
 				function SliderLib:Set(val)
@@ -2177,7 +1975,7 @@ function library:CreateWindow(name)
 				name = name or 'Textbox'
 
 
-				text = text or 'Text'
+				text = text or 'Enter text'
 
 
 				_function = _function or function() end
@@ -2318,7 +2116,7 @@ function library:CreateWindow(name)
 				_Box.Font = Enum.Font.SourceSans
 
 
-				_Box.Text = "Text"
+				_Box.Text = text
 
 
 				_Box.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -2366,7 +2164,7 @@ function library:CreateWindow(name)
 
 
 
-				
+				library.Pointers[name] = textbox
 
 
 
@@ -2375,7 +2173,7 @@ function library:CreateWindow(name)
 				local TextLib = {}
 
 
-				library.Pointers[name] = TextLib
+
 
 
 				function TextLib:Set(val)
@@ -2495,7 +2293,7 @@ function library:CreateWindow(name)
 
 				ColorPicker.TextWrapped = true
 
-				ColorPicker.ZIndex = 10
+				ColorPicker.ZIndex = 1
 
 
 
@@ -2645,9 +2443,11 @@ function library:CreateWindow(name)
 					ColorSlider.Visible = not ColorSlider.Visible
 					
 					if ColorPicker_2.Visible == true and ColorSlider.Visible == true then
+						ColorPicker.ZIndex = 10
 						Section.ZIndex = 5
 					else
 						Section.ZIndex = 1
+						ColorPicker.ZIndex = 1
 					end
 				end)
 
@@ -2672,7 +2472,7 @@ function library:CreateWindow(name)
 
 				end
 
-				NewColor()
+
 
 				local dragging = false
 
@@ -2799,66 +2599,26 @@ function library:CreateWindow(name)
 
 
 						hinput = game:GetService("RunService").RenderStepped:Connect(function()
-
-
 							local Mouse = game.Players.LocalPlayer:GetMouse()
-
-
 							local HY = (math.clamp(Mouse.X - ColorSlider.AbsolutePosition.X, 0, ColorSlider.AbsoluteSize.X) / ColorSlider.AbsoluteSize.X)
-
-
-
 							picker.H = 1 - HY
-
-
-
 							NewColor()
-
-
 						end)
-
-
-
 						dragging = true
-
-
 						CPDragging = true
-
-
 					end
-
-
 				end)
-
-
-
 				ColorSlider.InputEnded:Connect(function(input)
-
-
 					if input.UserInputType == Enum.UserInputType.MouseButton1 then
-
-
 						if (hinput) then
-
-
 							hinput:Disconnect()
-
-
 						end
-
-
-
 						dragging = false
 
-
 						CPDragging = false
-
-
 					end
 
 					local ColorLib = {}
-						
-					library.Pointers[name] = ColorLib
 
 					function ColorLib:Set(val)
 						Color.BackgroundColor3 = val
@@ -2879,45 +2639,30 @@ function library:CreateWindow(name)
 
 					return ColorLib
 				end)
-
-
 			end
-
-
-
-
-
 			return GroupboxLib
-
-
 		end
-
-
-
-
-
 		return TabLib
-
-
 	end
-
-
-
-
-
-	return WindowLib,UILib
-
-
-end
-
-function library:LoadConfig(cfg)
-	table.foreach(cfg, function(a,b)
-		if library.Pointers[a] then
-			spawn(function() library.Pointers[a]:Set(b) end)
-		else
-			warn("[ERROR] Config (Object Not Found):", a, b)
+	
+	function WindowLib:LoadCfg(cfg)
+		for i,v in pairs(cfg) do
+			print(library.Pointers)
+			if library.Pointers[i] and typeof(v) ~= 'table' then
+				library.Pointers[i]:Set(v)
+			else
+				for i2,v2 in pairs(v) do
+					if i2 == 'Keybind' then
+						library.Pointers[i]['Keybind']:Set(v2)
+					else
+						library.Pointers[i]:Set(v2)
+					end
+				end
+			end
 		end
-	end)	
+	end
+	
+	return WindowLib,UILib
 end
 
 return library
