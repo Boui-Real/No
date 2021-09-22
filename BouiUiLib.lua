@@ -105,7 +105,7 @@ function library:CreateWindow(name)
 	
 	local Background_Main = Instance.new("ImageLabel",MainFrame)
 	
-	Background_Main.Image = 'http://www.roblox.com/asset/?id=7530940902'
+	Background_Main.Image = 'http://www.roblox.com/asset/?id=7536744588'
 	
 	Background_Main.BorderSizePixel = 0
 	
@@ -1243,7 +1243,7 @@ function library:CreateWindow(name)
 
 				Dropdown.Font = Enum.Font.TitilliumWeb
 
-				Dropdown.Text = name .. ' , Selected: ' .. dropdown.option
+				Dropdown.Text = name .. ' , ' .. dropdown.option
 
 				Dropdown.TextColor3 = Color3.fromRGB(255, 255, 255)
 
@@ -1432,7 +1432,7 @@ function library:CreateWindow(name)
 									Btn.Text = library.Symbols.Dropdown.Drop
 
 
-									Dropdown.Text = name .. ' , Selected: ' .. dropdown.option
+									Dropdown.Text = name .. ' , ' .. dropdown.option
 
 
 									_function(dropdown.option)
@@ -1444,33 +1444,13 @@ function library:CreateWindow(name)
 							end
 
 
-							Dropdown.MouseButton1Click:Connect(function()
-
-
-								Btn.Text = library.Symbols.Dropdown.Drop
-
-
-								Drop.Visible = false
-
-
-							end)
-
-
-							Btn.MouseButton1Click:Connect(function()
-
-
-								Btn.Text = library.Symbols.Dropdown.Drop
-
-
-								Drop.Visible = false
-
-
-							end)
-
-
 						end
 
-
+					else
+						
+						Btn.Text = library.Symbols.Dropdown.Drop
+						Drop.Visible = false
+						
 					end
 
 
@@ -1492,22 +1472,21 @@ function library:CreateWindow(name)
 
 
 
-				library.Pointers[name] = dropdown
-
-
-
-
-
 				local DropdownLib = {}
 
 
-
+				library.Pointers[tab_name .. '_' .. groupbox_name .. '_' .. name] = DropdownLib
 
 
 				function DropdownLib:Set(val)
 
-
-					dropdown.option = options[val]
+					for i,v in pairs(options) do
+						if v == val then
+							dropdown.option = v
+						end
+					end
+					
+					Dropdown.Text = name .. ' , ' .. dropdown.option
 
 
 					_function(dropdown.option)
@@ -1735,10 +1714,8 @@ function library:CreateWindow(name)
 				end)
 				
 				Slider.MouseButton1Down:Connect(function()
-					if val / max == 0 then
-						dragging = true
-						SliderDragging = true
-					end
+					dragging = true
+					SliderDragging = true
 				end)
 
 
@@ -1930,7 +1907,7 @@ function library:CreateWindow(name)
 				local SliderLib = {}
 
 
-				
+				library.Pointers[tab_name .. '_' .. groupbox_name .. '_' .. name] = SliderLib
 
 
 				function SliderLib:Set(val)
@@ -2160,20 +2137,10 @@ function library:CreateWindow(name)
 
 				end
 
-
-
-
-
-				library.Pointers[name] = textbox
-
-
-
-
-
 				local TextLib = {}
 
 
-
+				library.Pointers[tab_name .. '_' .. groupbox_name .. '_' .. name] = TextLib
 
 
 				function TextLib:Set(val)
@@ -2182,7 +2149,7 @@ function library:CreateWindow(name)
 					textbox.text = val
 
 
-					TextBox.Text = textbox.text
+					_Box.Text = textbox.text
 
 
 					_function(textbox.text)
@@ -2251,10 +2218,7 @@ function library:CreateWindow(name)
 				local UIGradient = Instance.new("UIGradient")
 
 
-
-
-
-				local picker = {H = 5,S = 1,V = 1,SelColor = def}
+				local picker = {H = tonumber(tostring(Color3.toHSV(def))),S = 1,V = 1,SelColor = def}
 
 
 
@@ -2303,7 +2267,7 @@ function library:CreateWindow(name)
 				Color.Parent = ColorPicker
 
 
-				Color.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+				Color.BackgroundColor3 = picker.SelColor
 
 
 				Color.BorderColor3 = Color3.fromRGB(0, 85, 255)
@@ -2347,7 +2311,7 @@ function library:CreateWindow(name)
 				Gradient.Parent = ColorPicker_2
 
 
-				Gradient.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+				Gradient.BackgroundColor3 = picker.SelColor
 
 
 				Gradient.BorderSizePixel = 0
@@ -2617,28 +2581,30 @@ function library:CreateWindow(name)
 
 						CPDragging = false
 					end
-
-					local ColorLib = {}
-
-					function ColorLib:Set(val)
-						Color.BackgroundColor3 = val
-
-
-						Gradient.BackgroundColor3 = val
-
-
-						picker.SelColor = Color.BackgroundColor3
-
-
-						_function(picker.SelColor)
-					end
-
-					function ColorLib:Get()
-						return picker.SelColor
-					end
-
-					return ColorLib
 				end)
+				
+				local ColorLib = {}
+
+				library.Pointers[tab_name .. '_' .. groupbox_name .. '_' .. name] = ColorLib
+
+				function ColorLib:Set(val)
+					Color.BackgroundColor3 = val
+
+
+					Gradient.BackgroundColor3 = val
+
+
+					picker.SelColor = Color.BackgroundColor3
+
+
+					_function(picker.SelColor)
+				end
+
+				function ColorLib:Get()
+					return picker.SelColor
+				end
+
+				return ColorLib
 			end
 			return GroupboxLib
 		end
@@ -2647,7 +2613,6 @@ function library:CreateWindow(name)
 	
 	function WindowLib:LoadCfg(cfg)
 		for i,v in pairs(cfg) do
-			print(library.Pointers)
 			if library.Pointers[i] and typeof(v) ~= 'table' then
 				library.Pointers[i]:Set(v)
 			else
@@ -2661,6 +2626,35 @@ function library:CreateWindow(name)
 			end
 		end
 	end
+	
+	function WindowLib:GetConfigString()
+		local str = '{'
+		for i,v in pairs(library.Pointers) do
+			if typeof(v:Get()) == 'Color3' then
+				str = str .. '[\'' .. i .. '\'] = Color3.new(' .. v:Get().R .. ',' .. v:Get().G .. ',' .. v:Get().B .. ');'
+			elseif typeof(v:Get()) == 'boolean' then
+				if v['Keybind'] == nil then
+					str = str .. '[\'' .. i .. '\'] = ' .. tostring(v:Get()) .. ';'
+				else
+					str = str .. '[\'' .. i .. '\'] = {Keybind=\'' .. v.Keybind:Get() .. '\',' .. v:Get() .. '};'
+				end
+			elseif typeof(v:Get()) == 'number' then
+				str = str .. '[\'' .. i .. '\'] = ' .. tostring(v:Get()) .. ';'
+			elseif typeof(v:Get()) == 'string' then
+				str = str .. '[\'' .. i .. '\'] = \[===\[' .. v:Get() .. '\]===\];'
+			end
+			
+		end
+		str = str .. '}'
+		
+		return str
+	end
+	
+	function WindowLib:SaveConfig(dir)
+		writefile(dir,WindowLib:GetConfigString())
+	end
+	
+	function WindowLib:GetPointers() print(library.Pointers) end
 	
 	return WindowLib,UILib
 end
