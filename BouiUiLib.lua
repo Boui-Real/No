@@ -1505,6 +1505,33 @@ function library:CreateWindow(name)
 
 
 				end
+				
+				function DropdownLib:Refresh(options_new)
+					options = options_new
+					
+					for i,v in pairs(Drop:GetChildren()) do
+						if v:IsA("TextButton") then
+							v:Destroy()
+						end
+					end
+					
+					for _,v in pairs(options) do
+						local Option = Instance.new("TextButton")
+
+						Option.Name = "Option"
+						Option.Parent = Drop
+						Option.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+						Option.BackgroundTransparency = 1.000
+						Option.Size = UDim2.new(1, 0, 0, 25)
+						Option.Font = Enum.Font.TitilliumWeb
+						Option.TextColor3 = Color3.fromRGB(255, 255, 255)
+						Option.TextScaled = true
+						Option.TextSize = 14.000
+						Option.TextWrapped = true
+						Option.Text = v
+						Drop.Size = UDim2.new(0.845,0,0,(#Drop:GetChildren() - 1) * 25)
+					end
+				end
 
 
 
