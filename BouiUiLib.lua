@@ -2663,7 +2663,7 @@ function library:CreateWindow(name)
 				if v['Keybind'] == nil then
 					str = str .. '[\'' .. i .. '\'] = ' .. tostring(v:Get()) .. ';'
 				else
-					str = str .. '[\'' .. i .. '\'] = {Keybind=\'' .. v.Keybind:Get() .. '\',' .. v:Get() .. '};'
+					str = str .. '[\'' .. i .. '\'] = {Keybind=\'' .. v.Keybind:Get() .. '\',' .. tostring(v:Get()) .. '};'
 				end
 			elseif typeof(v:Get()) == 'number' then
 				str = str .. '[\'' .. i .. '\'] = ' .. tostring(v:Get()) .. ';'
