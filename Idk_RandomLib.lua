@@ -4,7 +4,11 @@ local library = {}
 local txt = game:GetService("TextService") 
 local TweenService = game:GetService("TweenService") 
 local RunService = game:GetService("RunService")
-function library:Tween(...) TweenService:Create(...):Play() end 
+function library:Tween(...) TweenService:Create(...):Play() end
+local Signal = loadstring(game:HttpGet("https://raw.githubusercontent.com/Quenty/NevermoreEngine/version2/Modules/Shared/Events/Signal.lua"))() 
+--local Api = loadstring(game:HttpGet("https://pastebin.com/raw/5L3wV43u"))()
+local ConfigSave = Signal.new("ConfigSave") 
+local ConfigLoad = Signal.new("ConfigLoad") 
 
 -- caching 
 local Vec2 = Vector2.new 
