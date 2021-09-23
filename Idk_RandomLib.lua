@@ -71,7 +71,7 @@ function library:ConfigFix(cfg,location)
 	end 
 	return copy 
 end 
-function library:SaveConfig(cfg) 
+function library:SaveConfig(cfg,location) 
 	local copy = deepCopy(values) 
 	for i,Tabs in pairs(copy) do 
 		for i,Sectors in pairs(Tabs) do 
@@ -82,7 +82,7 @@ function library:SaveConfig(cfg)
 			end 
 		end 
 	end 
-	writefile(cfglocation..cfg..".txt", game:GetService("HttpService"):JSONEncode(copy)) 
+	writefile(location..cfg..".txt", game:GetService("HttpService"):JSONEncode(copy)) 
 end 
 
 function library:New(name) 
