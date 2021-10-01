@@ -30,7 +30,9 @@ local UIS = game:GetService("UserInputService")
 
 
 
-function library:CreateWindow(name)
+function library:CreateWindow(name,size)
+	
+	size = size or Vector2.new(492,598)
 
 
 	name = name or 'n'
@@ -101,11 +103,11 @@ function library:CreateWindow(name)
 	MainFrame.Position = UDim2.new(0.314972818, 0, 0.159999996, 0)
 
 
-	MainFrame.Size = UDim2.new(0.369200915, 0, 0.678181827, 0)
+	MainFrame.Size = UDim2.fromOffset(size.X,size.Y)--UDim2.new(0.369200915, 0, 0.678181827, 0)
 	
 	local Background_Main = Instance.new("ImageLabel",MainFrame)
 	
-	Background_Main.Image = 'http://www.roblox.com/asset/?id=7536744588'
+	Background_Main.Image = 'http://www.roblox.com/asset/?id=1489848417'
 	
 	Background_Main.BorderSizePixel = 0
 	
@@ -644,6 +646,8 @@ function library:CreateWindow(name)
 
 
 			Section.BorderSizePixel = 0
+			
+			Section.BackgroundTransparency = 1
 
 
 			Section.Size = UDim2.new(0.949999988, 0, 0, 0)
@@ -683,6 +687,8 @@ function library:CreateWindow(name)
 
 
 			_GroupboxName.TextColor3 = Color3.fromRGB(255,255,255)
+			
+			_GroupboxName.BackgroundTransparency = 1
 
 
 			_GroupboxName.Font = Enum.Font.TitilliumWeb
@@ -1217,7 +1223,7 @@ function library:CreateWindow(name)
 
 				multi = multi or false
 
-				local dropdown = {selected = '',opened = false,option = options[1]}
+				local dropdown = {selected = '',opened = false,option = {options[1]}}
 
 				local Dropdown = Instance.new("TextButton")
 
@@ -1243,7 +1249,7 @@ function library:CreateWindow(name)
 
 				Dropdown.Font = Enum.Font.TitilliumWeb
 
-				Dropdown.Text = name .. ' , ' .. dropdown.option
+				Dropdown.Text = name .. ' : ' .. dropdown.option[1]
 
 				Dropdown.TextColor3 = Color3.fromRGB(255, 255, 255)
 
@@ -1295,82 +1301,48 @@ function library:CreateWindow(name)
 
 				Drop.Parent = Dropdown
 
-
 				Drop.BackgroundColor3 = Color3.fromRGB(33, 33, 33)
-
 
 				Drop.BorderColor3 = Color3.fromRGB(0, 85, 255)
 
-
 				Drop.Position = UDim2.new(0.0752047449, 0, 1, 0)
-
 
 				Drop.Size = UDim2.new(0.845000029, 0, 0, 25)
 
-
 				Drop.Visible = false
-
 
 				Drop.ZIndex = 6
 
-
-
-
-
 				List.Parent = Drop
-
-
-
-
 
 				for _,v in pairs(options) do
 
 
 					local Option = Instance.new("TextButton")
 
-
-
-
-
 					Option.Name = "Option"
-
 
 					Option.Parent = Drop
 
-
 					Option.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-
 
 					Option.BackgroundTransparency = 1.000
 
-
 					Option.Size = UDim2.new(1, 0, 0, 25)
-
 
 					Option.Font = Enum.Font.TitilliumWeb
 
-
 					Option.TextColor3 = Color3.fromRGB(255, 255, 255)
-
 
 					Option.TextScaled = true
 
-
 					Option.TextSize = 14.000
-
 
 					Option.TextWrapped = true
 
-
 					Option.Text = v
 
-
-
-
-
 					Drop.Size = UDim2.new(0.845,0,0,(#Drop:GetChildren() - 1) * 25)
-
-
 				end
 
 
@@ -1420,19 +1392,47 @@ function library:CreateWindow(name)
 								v.MouseButton1Click:Connect(function()
 
 
-									dropdown.option = v.Text
+									if not multi then
+										dropdown.option = {v.Text}
+									else
+										if table.find(dropdown.option,v.Text) == nil then
+											table.insert(dropdown.option,v.Text)
+										else
+											print(#dropdown.option)
+											if #dropdown.option == 1 == false then
+												for i,v2 in pairs(dropdown.option) do
+													local new_tbl = {}
+													if tostring(v2) ~= v.Text then
+														table.insert(new_tbl,v2)
+													end
+													dropdown.option = new_tbl
+												end
+											end
+										end
+									end
 
 
-									dropdown.opened = false
-
-
-									Drop.Visible = false
-
-
-									Btn.Text = library.Symbols.Dropdown.Drop
-
-
-									Dropdown.Text = name .. ' , ' .. dropdown.option
+									if not multi then
+										dropdown.opened = false
+										Drop.Visible = false
+										Btn.Text = library.Symbols.Dropdown.Drop
+									end
+									
+									local FormattedText = ''
+									
+									local tos = tostring
+									
+									if #dropdown.option == 1 then
+										FormattedText = tos(dropdown.option[1])
+									else
+										if #dropdown.option == 2 then
+											FormattedText = tos(dropdown.option[1]) .. ', ' .. tos(dropdown.option[2])
+										else
+											FormattedText = tos(dropdown.option[1]) .. ', ' .. tos(dropdown.option[2]) .. ', ...' 
+										end
+									end
+									
+									Dropdown.Text = name .. ' : ' .. FormattedText
 
 
 									_function(dropdown.option)
@@ -1480,13 +1480,39 @@ function library:CreateWindow(name)
 
 				function DropdownLib:Set(val)
 
-					for i,v in pairs(options) do
-						if v == val then
-							dropdown.option = v
+					if not multi then
+						for i,v in pairs(options) do
+							if v == val then
+								dropdown.option = {v}
+							end
+						end
+					else
+						if typeof(val) == 'table' then
+							dropdown.option = val
+						else
+							for i,v in pairs(options) do
+								if v == val then
+									dropdown.option = v
+								end
+							end
 						end
 					end
 					
-					Dropdown.Text = name .. ' , ' .. dropdown.option
+					local FormattedText = ''
+
+					local tos = tostring
+
+					if #dropdown.option == 1 then
+						FormattedText = tos(dropdown.option[1])
+					else
+						if #dropdown.option == 2 then
+							FormattedText = tos(dropdown.option[1]) .. ', ' .. tos(dropdown.option[2])
+						else
+							FormattedText = tos(dropdown.option[1]) .. ', ' .. tos(dropdown.option[2]) .. ', ...' 
+						end
+					end
+					
+					Dropdown.Text = name .. ' : ' .. FormattedText
 
 
 					_function(dropdown.option)
@@ -1938,14 +1964,13 @@ function library:CreateWindow(name)
 
 
 				function SliderLib:Set(val)
-
-
 					slider.value = val
-
+					
+					Value.Text = slider.value
+					
+					Dragger.Size = UDim2.new(val / max,0,1,0)
 
 					_function(val)
-
-
 				end
 
 
@@ -1999,357 +2024,214 @@ function library:CreateWindow(name)
 
 				local _Text_2 = Instance.new("TextLabel")
 
-
 				local _TextFrame = Instance.new("Frame")
-
 
 				local _Box = Instance.new("TextBox")
 
-
-
-
-
 				TextBox.Name = "TextBox"
-
 
 				TextBox.Parent = Section
 
-
 				TextBox.BackgroundColor3 = Color3.fromRGB(33, 33, 33)
-
 
 				TextBox.BorderColor3 = Color3.fromRGB(0, 85, 255)
 
-
 				TextBox.Size = UDim2.new(1, 0, 0, 25)
-
 
 				TextBox.Font = Enum.Font.TitilliumWeb
 
-
 				TextBox.Text = ""
-
 
 				TextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
 
-
 				TextBox.TextScaled = true
-
 
 				TextBox.TextSize = 14.000
 
-
 				TextBox.TextWrapped = true
-
-
 
 				_Text_2.Name = "_Text"
 
-
 				_Text_2.Parent = TextBox
-
 
 				_Text_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 
-
 				_Text_2.BackgroundTransparency = 1.000
-
 
 				_Text_2.Position = UDim2.new(0.0376023762, 0, 0, 0)
 
-
 				_Text_2.Size = UDim2.new(0.267916858, 0, 1, 0)
-
 
 				_Text_2.Font = Enum.Font.TitilliumWeb
 
-
 				_Text_2.Text = name
-
 
 				_Text_2.TextColor3 = Color3.fromRGB(255, 255, 255)
 
-
 				_Text_2.TextScaled = true
-
 
 				_Text_2.TextSize = 14.000
 
-
 				_Text_2.TextWrapped = true
-
-
 
 				_TextFrame.Name = "_TextFrame"
 
-
 				_TextFrame.Parent = TextBox
-
 
 				_TextFrame.BackgroundColor3 = Color3.fromRGB(33, 33, 33)
 
-
 				_TextFrame.BorderColor3 = Color3.fromRGB(0, 85, 255)
-
 
 				_TextFrame.Position = UDim2.new(0.371323466, 0, 0.14899902, 0)
 
-
 				_TextFrame.Size = UDim2.new(0.58902967, 0, 0.670999765, 0)
-
-
 
 				_Box.Name = "_Box"
 
-
 				_Box.Parent = _TextFrame
-
 
 				_Box.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 
-
 				_Box.BackgroundTransparency = 1.000
-
 
 				_Box.Size = UDim2.new(1, 0, 1, 0)
 
-
 				_Box.ClearTextOnFocus = false
-
 
 				_Box.Font = Enum.Font.SourceSans
 
-
 				_Box.Text = text
-
 
 				_Box.TextColor3 = Color3.fromRGB(255, 255, 255)
 
-
 				_Box.TextScaled = true
-
 
 				_Box.TextSize = 14.000
 
-
 				_Box.TextWrapped = true
 
-
 				_Box.FocusLost:Connect(function(prop)
-
-
 					textbox.text = _Box.Text
 
-
 					_function(textbox.text)
-
-
 				end)
 
-
-
-
-
 				if #Section:GetChildren() == 2 then
-
-
 					Section.Size = UDim2.new(0.949999988, 0, 0, 25)
-
-
 				elseif #Section:GetChildren() > 2 then
-
-
 					Section.Size = UDim2.new(0.949999988, 0, 0, ((#Section:GetChildren() - 1) * 25) + ((#Section:GetChildren() - 1) * 7))
-
-
 				end
 
 				local TextLib = {}
 
-
 				library.Pointers[tab_name .. '_' .. groupbox_name .. '_' .. name] = TextLib
 
-
 				function TextLib:Set(val)
-
-
 					textbox.text = val
 
-
 					_Box.Text = textbox.text
-
 
 					_function(textbox.text)
 
 
 				end
 
-
-
-
-
 				function TextLib:Get()
-
-
 					return textbox.text
-
-
 				end
 
-
-
-
-
 				return TextLib
-
-
 			end
-
-
-
-
 
 			function GroupboxLib:CreateColorPicker(name,def,_function)
 
-
 				name = name or 'Color Picker'
-
 
 				def = def or Color3.fromRGB(255,255,255)
 
-
 				_function = _function or function() end
-
-
-
-
 
 				local ColorPicker = Instance.new("TextButton")
 
-
 				local Color = Instance.new("Frame")
-
 
 				local ColorPicker_2 = Instance.new("Frame")
 
-
 				local Gradient = Instance.new("ImageLabel")
-
 
 				local Picker = Instance.new("ImageLabel")
 
-
 				local ColorSlider = Instance.new("Frame")
-
 
 				local UIGradient = Instance.new("UIGradient")
 
-
 				local picker = {H = tonumber(tostring(Color3.toHSV(def))),S = 1,V = 1,SelColor = def}
-
-
 
 				ColorPicker.Name = "ColorPicker"
 
-
 				ColorPicker.Parent = Section
-
 
 				ColorPicker.BackgroundColor3 = Color3.fromRGB(33, 33, 33)
 
-
 				ColorPicker.BorderColor3 = Color3.fromRGB(0, 85, 255)
-
 
 				ColorPicker.Position = UDim2.new(-0.0141008906, 0, -0.168750003, 0)
 
-
 				ColorPicker.Size = UDim2.new(1, 0, 0, 25)
-
 
 				ColorPicker.Font = Enum.Font.TitilliumWeb
 
-
 				ColorPicker.Text = name
-
 
 				ColorPicker.TextColor3 = Color3.fromRGB(255, 255, 255)
 
-
 				ColorPicker.TextScaled = true
 
-
 				ColorPicker.TextSize = 14.000
-
 
 				ColorPicker.TextWrapped = true
 
 				ColorPicker.ZIndex = 1
 
-
-
 				Color.Name = "Color"
-
 
 				Color.Parent = ColorPicker
 
-
 				Color.BackgroundColor3 = picker.SelColor
-
 
 				Color.BorderColor3 = Color3.fromRGB(0, 85, 255)
 
-
 				Color.Position = UDim2.new(0.0385014825, 0, 0.148999989, 0)
-
 
 				Color.Size = UDim2.new(0.0799999982, 0, 0.699999988, 0)
 
-
-
 				ColorPicker_2.Name = "ColorPicker"
-
 
 				ColorPicker_2.Parent = ColorPicker
 
-
 				ColorPicker_2.BackgroundColor3 = Color3.fromRGB(33, 33, 33)
-
 
 				ColorPicker_2.BorderColor3 = Color3.fromRGB(0, 85, 255)
 
-
 				ColorPicker_2.Position = UDim2.new(0.0517034084, 0, 1.36000001, 0)
-
 
 				ColorPicker_2.Size = UDim2.new(0.889349937, 0, 5.5, 0)
 
-
 				ColorPicker_2.ZIndex = 25
-
 
 				ColorPicker_2.Visible = false
 
-
-
 				Gradient.Name = "Gradient"
-
 
 				Gradient.Parent = ColorPicker_2
 
-
 				Gradient.BackgroundColor3 = picker.SelColor
-
 
 				Gradient.BorderSizePixel = 0
 
-
 				Gradient.Size = UDim2.new(1, 0, 1, 0)
 
-
 				Gradient.Image = "rbxassetid://4155801252"
-
-
 
 				Picker.Name = "Picker"
 
@@ -2517,7 +2399,15 @@ function library:CreateWindow(name)
 
 
 
-							Picker.Position = UDim2.new(ColorX, 0, ColorY, 0)
+							if ColorX > 0.9 then
+								Picker.Position = UDim2.new(0.9, 0, ColorY, 0)
+							elseif ColorY > 0.85 then
+								Picker.Position = UDim2.new(ColorX, 0, 0.85, 0)
+							elseif ColorY > 0.85 and ColorX > 0.9 then
+								Picker.Position = UDim2.new(0.9, 0, 0.85, 0)
+							else
+								Picker.Position = UDim2.new(ColorX, 0, ColorY, 0)
+							end
 
 
 
@@ -2675,6 +2565,10 @@ function library:CreateWindow(name)
 		str = str .. '}'
 		
 		return str
+	end
+	
+	function WindowLib:SetBackground(assetid)
+		Background_Main.Image = 'rbxassetid://' .. assetid
 	end
 	
 	function WindowLib:SaveConfig(dir)
