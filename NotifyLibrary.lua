@@ -2,10 +2,10 @@ repeat wait() until game:IsLoaded()
 
 local asseted_System = game:GetObjects("rbxassetid://7735190140")[1]
 asseted_System.Parent = game.CoreGui
-asseted_System.NotificationsHandler:Destroy()
+asseted_System.NotificationHandler:Destroy()
 
 local script = Instance.new("LocalScript",asseted_System)
-script.Name = "NotificationsHandler"
+script.Name = "NotificationHandler"
 
 local NotifyLib = {
 	Colors = {
