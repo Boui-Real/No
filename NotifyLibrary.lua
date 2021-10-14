@@ -3,7 +3,7 @@ repeat wait() until game:IsLoaded()
 local asseted_System = game:GetObjects("rbxassetid://7735190140")[1]
 asseted_System.Parent = game.CoreGui
 asseted_System.NotificationHandler.Disabled = true
-local script = asseted_System.NotificationHandler
+script = asseted_System.NotificationHandler
 
 local NotifyLib = {
 	Colors = {
@@ -64,7 +64,7 @@ function NotifyLib.createNotify(TitleText, DescriptionText, Sound, TitleColor, D
 	}
 	
 	local notifyLabel = script.Notify:Clone()
-	notifyLabel.Parent = script.Parent.NotificationsFrame
+	notifyLabel.Parent = asseted_System.NotificationsFrame
 	
 	notifyLabel.NotifyTitle.Text = TitleText
 	notifyLabel.NotifyTitle.TextColor3 = TitleColor
@@ -121,9 +121,9 @@ function NotifyLib.createNotify(TitleText, DescriptionText, Sound, TitleColor, D
 		LastSize = LastSize + Size + 12
 		
 		local newLastSize = 1000
-		local newCount = #script.Parent.NotificationsFrame:GetChildren() - 1
+		local newCount = #asseted_System.NotificationsFrame:GetChildren() - 1
 		
-		for _,notify in pairs(script.Parent.NotificationsFrame:GetChildren()) do
+		for _,notify in pairs(asseted_System.NotificationsFrame:GetChildren()) do
 			if notify:IsA("Frame") then
 				if newCount > 1 then
 					TweenService:Create(notify,TweenInfo.new(0.25),{Position = UDim2.new(0.05,0,(newLastSize - Size - 12) / 1000,0)}):Play()
